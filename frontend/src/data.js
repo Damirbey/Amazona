@@ -5,7 +5,9 @@ const products=[
         description:"Good quality product",
         image:"images/p1.jpg",
         price:120,
-        rating:4.5
+        countInStock:4,
+        rating:4.5,
+        numOfReviews:100
     },
     {
         _id:2,
@@ -13,7 +15,9 @@ const products=[
         description:"Good quality product",
         image:"images/p3.jpg",
         price:150,
-        rating:4
+        countInStock:5,
+        rating:4,
+        numOfReviews:120
     },
     {
         _id:3,
@@ -21,7 +25,9 @@ const products=[
         description:"Good quality product",
         image:"images/p4.jpg",
         price:88,
-        rating:4.5
+        countInStock:7,
+        rating:4.5,
+        numOfReviews:115
     },
     {
         _id:4,
@@ -29,7 +35,9 @@ const products=[
         description:"Good quality product",
         image:"images/p6.jpg",
         price:120,
-        rating:4.5
+        countInStock:0,
+        rating:4.5,
+        numOfReviews:75
     },
     {
         _id:5,
@@ -37,7 +45,9 @@ const products=[
         description:"Good quality product",
         image:"images/p3.jpg",
         price:100,
-        rating:5
+        countInStock:4,
+        rating:5,
+        numOfReviews:77
     },
     {
         _id:6,
@@ -45,7 +55,10 @@ const products=[
         description:"Good quality product",
         image:"images/p1.jpg",
         price:120,
-        rating:3.5
+        countInStock:10,
+        rating:3.5,
+        numOfReviews:150
     }
-];
+]
+
 export default products;

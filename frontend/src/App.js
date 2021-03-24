@@ -1,8 +1,13 @@
-import products from "./data";
+import React from "react";
+import {BrowserRouter,Route} from "react-router-dom";
+import HomeScreen from "./screens/HomeScreen";
+import ProductScreen from "./screens/ProductScreen";
 
 function App(){
   return(
-    <div className="grid-container">
+    <BrowserRouter>
+      <div className="grid-container">
+
             <header className="row">
                 <div>
                     <a className="brand" href="/">Amazona</a>
@@ -12,44 +17,17 @@ function App(){
                     <a href="/signIn">Sign In</a>
                 </div>
             </header>
+
             <main>
-              <div className="row center">
-
-                {products.map((product)=>(
-
-                    <div className="card" key={product._id}>
-
-                      <a href={`/product/${product._id}`}><img src={product.image} alt={product.description} className="medium"/></a>
-
-                      <div className="card-body">
-
-                        <a href={`/product/${product._id}`}>{product.name}</a>
-
-                        <div className="rating">
-                          <span><i className="fa fa-star"></i></span>
-                          <span><i className="fa fa-star"></i></span>
-                          <span><i className="fa fa-star"></i></span>
-                          <span><i className="fa fa-star"></i></span>
-                          <span><i className="fa fa-star"></i></span>
-                        </div>
-
-                        <div className="price">
-                        $ {product.price}
-                        </div>
-
-                      </div>
-
-                    </div>
-                ))}           
-                 
-                    
-              </div>
-                               
+              <Route path="/" component={HomeScreen} exact></Route>
+              <Route path="/product/:id" component={ProductScreen}></Route>                
             </main>
+
             <footer className="row center">
                 All rights reserved
             </footer>
         </div>
+    </BrowserRouter>  
   );
 }
 export default App;

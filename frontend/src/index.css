@@ -105,9 +105,16 @@ footer{
   margin:1rem 0;
   color:#ffd700;
 }
+.rating span{
+  padding:0.2rem;
+}
+.rating span:last-child{
+  color:#000000;
+}
 .price{
   font-size:2rem;
 }
+
 
 /*Product page*/
 .col-2 {
@@ -136,4 +143,10 @@ button {
 .productName{
   font-weight:bold;
   font-size:1.8rem;
+}
+.inStock{
+  color:#008000;
+}
+.unavailable{
+  color:#ff0000;
 }
