@@ -17,7 +17,6 @@ function ProductScreen(props)
     },[dispatch,productID])
    
     
-    
         return (
             
             <div>

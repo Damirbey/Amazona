@@ -5,7 +5,6 @@ import MessageBox from "../components/MessageBox";
 import LoadingBox from "../components/LoadingBox";
 import { useSelector, useDispatch } from "react-redux";
 
-
 function HomeScreen()
 {
     const dispatch = useDispatch();
@@ -32,5 +31,4 @@ function HomeScreen()
                 
     )
 }
-
 export default HomeScreen;
