@@ -1,5 +1,5 @@
 import React,{useEffect} from "react";
-import listProducts from "../actions/productActions";
+import {listProducts} from "../actions/productActions";
 import Product from "../components/Product";
 import MessageBox from "../components/MessageBox";
 import LoadingBox from "../components/LoadingBox";
@@ -14,7 +14,7 @@ function HomeScreen()
     useEffect(()=>{
        dispatch(listProducts());
 
-    },[]);
+    },[dispatch]);
     console.log(error);    
     return(
         <div>
