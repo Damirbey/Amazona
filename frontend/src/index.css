@@ -129,6 +129,9 @@ button.block {
 button.primary {
   background-color: #f0c040;
 }
+select,
+input,
+textarea,
 button {
   background-color: #f8f8f8;
   cursor: pointer;
