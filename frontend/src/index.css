@@ -74,7 +74,14 @@ header a{
 .brand:hover{
   color:#ffffff;
 }
-
+.badge{
+  background-color: #ff2020;
+  color:#ffffff;
+  border-radius: 50%;
+  padding:0.2rem 0.7rem;
+  font-size:1.4rem;
+  margin-left:0.2rem;
+}
 /* Main Section */
 main{
   grid-area:main;
