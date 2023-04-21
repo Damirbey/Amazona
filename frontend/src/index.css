@@ -21,3 +21,22 @@ code {
   font-weight: bold;
   text-decoration: none;
 }
+main {
+  padding: 1rem;
+}
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  justify-items: center;
+  grid-gap: 1rem;
+}
+.product {
+  border: 1px solid #404040;
+}
+.product__img {
+  width: 100%;
+  max-width: 400px;
+}
+.product__details {
+  padding: 1rem;
+}
