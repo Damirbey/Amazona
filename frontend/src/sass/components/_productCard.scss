@@ -6,7 +6,7 @@
 
   &__img {
     width: 100%;
-    max-width: 400px;
+    max-width: 300px;
   }
   &__details {
     padding: 1rem;
@@ -34,7 +34,8 @@
     transform: scale(1.05);
   }
 }
-.fas {
+.fas,
+.far {
   &:not(:first-child) {
     margin-left: 0.5rem;
   }

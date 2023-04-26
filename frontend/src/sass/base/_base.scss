@@ -15,10 +15,10 @@ code {
   display: grid;
   grid-template-rows: 3rem minmax(60rem, max-content) 3rem;
   grid-template-columns:
-    [full-start]minmax(6rem, 1fr) [center-start] repeat(
+    [full-start]minmax(3rem, 1fr) [center-start] repeat(
       6,
       [col-start] minmax(min-content, 14rem) [col-end]
     )
-    [center-end] minmax(6rem, 1fr)
+    [center-end] minmax(3rem, 1fr)
     [full-end];
 }
