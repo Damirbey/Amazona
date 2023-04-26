@@ -1,0 +1,21 @@
+.header {
+  background-color: #404040;
+  padding: 1rem;
+  grid-row: 1/2;
+  grid-column: full-start/full-end;
+  display: grid;
+  align-content: center;
+  &__brandName {
+    width: 3rem;
+    grid-column: 2/3;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.4rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    &:hover {
+      color: $color-primary-gold;
+    }
+  }
+}

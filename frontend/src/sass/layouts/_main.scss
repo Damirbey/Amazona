@@ -1,0 +1,11 @@
+main {
+  padding: 1rem;
+  grid-row: 2/3;
+  grid-column: center-start/center-end;
+}
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  justify-items: center;
+  grid-gap: 1rem;
+}

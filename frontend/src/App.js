@@ -7,7 +7,9 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <header className="header">
-          <Link to="/">amazona</Link>
+          <Link to="/" className="header__brandName">
+            amazona
+          </Link>
         </header>
         <main>
           <Routes>
@@ -15,6 +17,9 @@ function App() {
             <Route path="/product/:slug" element={<ProductScreen />} />
           </Routes>
         </main>
+        <footer className="footer">
+          <span className="footer__text">All Rights Reserved</span>
+        </footer>
       </div>
     </BrowserRouter>
   );

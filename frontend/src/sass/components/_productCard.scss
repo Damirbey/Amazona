@@ -1,0 +1,41 @@
+.product {
+  border: 1px solid #ccc;
+  transition: all 0.2s;
+  box-shadow: 0rem 0rem 1rem #888;
+  padding: 1rem;
+
+  &__img {
+    width: 100%;
+    max-width: 400px;
+  }
+  &__details {
+    padding: 1rem;
+  }
+  & a {
+    text-decoration: none;
+    color: #4c4e52;
+    cursor: pointer;
+    font-size: 1.4rem;
+    transition: all 0.2s;
+  }
+
+  &__price:hover,
+  &__name:hover {
+    color: #000;
+  }
+  &__rating {
+    color: $color-primary-gold;
+  }
+  &__reviews {
+    margin-left: 0.8rem;
+  }
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+.fas {
+  &:not(:first-child) {
+    margin-left: 0.5rem;
+  }
+}
