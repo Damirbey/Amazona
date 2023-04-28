@@ -1,6 +1,7 @@
 @import 'base/base';
 @import 'base/utilities';
 @import 'base/variables';
+@import 'base/typography';
 
 @import 'layouts/header';
 @import 'layouts/footer';
@@ -8,3 +9,4 @@
 
 @import 'components/productCard';
 @import 'components/button';
+@import 'components/spinner';

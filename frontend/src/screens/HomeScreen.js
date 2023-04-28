@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { useEffect, useReducer, useState } from 'react';
 import axios from 'axios';
 import ProductCard from '../components/ProductCard';
+import Spinner from '../components/Spinner';
 //DECLARED REDUCER TO MANAGE COMPLEX STATES
 const reducer = (state, action) => {
   switch (action.type) {
@@ -38,15 +40,18 @@ function HomeScreen() {
 
   return (
     <div>
-      <h1>Featured Products</h1>
+      <Helmet>
+        <title>Amazona</title>
+      </Helmet>
+      <h1 className="heading-1">Featured Products</h1>
       {loading ? (
-        <p>Loading...</p>
+        <Spinner />
       ) : error ? (
         <p>{error}</p>
       ) : (
         <div className="products">
           {products.map((eachProduct) => (
-            <ProductCard product={eachProduct} />
+            <ProductCard key={eachProduct.slug} product={eachProduct} />
           ))}
         </div>
       )}
