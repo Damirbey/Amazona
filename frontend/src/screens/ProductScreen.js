@@ -1,7 +1,9 @@
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useEffect, useReducer } from 'react';
 import axios from 'axios';
+import ProductRating from '../components/ProductRating';
 
 //CREATED REDUCER TO MANAGE STATE
 const reducer = (state, action) => {
@@ -11,6 +13,7 @@ const reducer = (state, action) => {
     case 'FETCH_SUCCESS':
       return { ...state, loading: false, product: action.payload };
     case 'FETCH_FAIL':
+      console.log('HERE');
       return { ...state, loading: false, error: action.payload };
     default:
       return state;
@@ -33,24 +36,59 @@ function ProductScreen() {
         const result = await axios.get(`/api/products/slug/${slug}`);
         dispatch({ type: 'FETCH_SUCCESS', payload: result.data });
       } catch (err) {
-        dispatch({ type: 'FETCH_FAIL', payload: err.message });
+        dispatch({ type: 'FETCH_FAIL', payload: err.a });
       }
     };
     fetchProduct();
   }, [slug]);
-  console.log(product);
   return (
-    <div className="productScreen">
+    <div className="product__screen">
       <Helmet>
         <title>{product.name}</title>
       </Helmet>
-      {error ? (
-        error
+      {loading ? (
+        <div className="alertMessage">{error}</div>
       ) : (
-        <div>
-          <img src={product.image} alt={product.slug} />
-          <h2>{product.name}</h2>
-        </div>
+        <React.Fragment>
+          <img
+            src={product.image}
+            alt={product.slug}
+            className="product__image"
+          />
+
+          <div className="product__information">
+            <ul>
+              <li>
+                <h2>{product.name}</h2>
+              </li>
+              <li>
+                <ProductRating
+                  rating={product.rating}
+                  numReviews={product.numReviews}
+                />
+              </li>
+              <li>
+                <div>
+                  <p>Description:</p>
+                  <p>{product.description}</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div className="product__availability">
+            <p>Price:</p>
+            <p>${product.price}</p>
+            <p>Status:</p>
+            <p>
+              {product.countInStock > 0 ? (
+                <div className="inStock">Available</div>
+              ) : (
+                <div className="outOfStock">Out of stock</div>
+              )}
+            </p>
+          </div>
+        </React.Fragment>
       )}
     </div>
   );

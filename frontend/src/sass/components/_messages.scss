@@ -1,0 +1,26 @@
+.successMessage {
+  background-color: #d1e7dd;
+  padding: 1rem;
+  color: #0f5132;
+  border-radius: 10px;
+  border: 1px solid #badbcc;
+}
+.alertMessage {
+  background-color: #f8d7da;
+  padding: 1rem;
+  color: #842029;
+  border-radius: 10px;
+  border: 1px solid #f5c2c7;
+}
+.inStock {
+  background-color: #0f5132;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+}
+.outOfStock {
+  background-color: red;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+}

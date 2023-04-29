@@ -10,14 +10,12 @@ app.get('/api/products', (req, res) => {
 });
 
 //FETCHING SPECIFIC PRODUCT
-app.get('/api/products/slug/:slugq', (req, res) => {
+app.get('/api/products/slug/:slug', (req, res) => {
   const foundProduct = data.products.find((x) => x.slug == req.params.slug);
 
   if (foundProduct) {
-    console.log('FOUND!', foundProduct);
     res.send(foundProduct);
   } else {
-    console.log('not found');
     res.status(404).send({ message: 'Product Not Found' });
   }
 });

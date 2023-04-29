@@ -1,0 +1,34 @@
+.product__screen {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, max-content));
+  align-items: start;
+  justify-items: center;
+  grid-gap: 1rem;
+}
+.product {
+  &__image {
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 1rem;
+  }
+  &__information {
+    padding: 1rem;
+
+    ul {
+      list-style: none;
+    }
+    li:not(:last-child) {
+      border-bottom: 1px solid #ccc;
+    }
+  }
+  &__availability {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    align-items: center;
+  }
+}
