@@ -1,8 +1,13 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
+import { Store } from './Store';
+import { useContext } from 'react';
 
 function App() {
+  const { state } = useContext(Store);
+  const { cart } = state;
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -10,6 +15,7 @@ function App() {
           <Link to="/" className="header__brandName">
             amazona
           </Link>
+          Cart {cart.cartItems.length}
         </header>
         <main>
           <Routes>

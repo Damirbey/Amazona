@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useEffect, useReducer } from 'react';
 import axios from 'axios';
 import ProductRating from '../components/ProductRating';
+import { Store } from '../Store';
 
 //CREATED REDUCER TO MANAGE STATE
 const reducer = (state, action) => {
@@ -41,6 +42,19 @@ function ProductScreen() {
     };
     fetchProduct();
   }, [slug]);
+
+  //IMPLEMENTING ADD TO CART
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+
+  const addToCartHandler = () => {
+    ctxDispatch({
+      type: 'CART_ADD_ITEM',
+      payload: { ...product },
+    });
+  };
+
+  //RENDERING THE COMPONENT
+
   return (
     <div className="product__screen">
       <Helmet>
@@ -87,6 +101,10 @@ function ProductScreen() {
                 <div className="outOfStock">Out of stock</div>
               )}
             </p>
+
+            <button className="btn" onClick={addToCartHandler}>
+              Add to cart
+            </button>
           </div>
         </React.Fragment>
       )}
