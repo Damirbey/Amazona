@@ -1,13 +1,13 @@
 import { useContext } from 'react';
 import { Store } from '../Store';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function CartScreen(props) {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart } = state;
-
+  const navigate = useNavigate();
   /*DELETING THE WHOLE ITEM COMPLETELY FROM THE CART*/
   const removeFromCart = (item) => {
     ctxDispatch({
@@ -27,6 +27,10 @@ function CartScreen(props) {
       type: 'CART_ADD_ITEM',
       payload: { ...product, quantity },
     });
+  };
+  //FUNCTION USED TO REDIRECT USER TO THE SIGN IN SCREEN ONCE THEY DECIDED TO PROCEED TO CHECKOUT
+  const redirect = () => {
+    navigate('/signIn');
   };
 
   return (
@@ -97,6 +101,7 @@ function CartScreen(props) {
           </h1>
           <button
             className={cart.cartItems.length > 0 ? 'btn' : 'btn__disabled'}
+            onClick={cart.cartItems.length > 0 && redirect}
           >
             Proceed to Checkout
           </button>

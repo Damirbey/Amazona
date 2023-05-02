@@ -4,6 +4,7 @@ import ProductScreen from './screens/ProductScreen';
 import { Store } from './Store';
 import { useContext } from 'react';
 import CartScreen from './screens/CartScreen';
+import SignInScreen from './screens/SignInScreen';
 
 function App() {
   const { state } = useContext(Store);
@@ -32,6 +33,7 @@ function App() {
             <Route path="/" element={<HomeScreen />} />
             <Route path="/product/:slug" element={<ProductScreen />} />
             <Route path="/cart" element={<CartScreen />} />
+            <Route path="/signIn" element={<SignInScreen />} />
           </Routes>
         </main>
         <footer className="footer">
