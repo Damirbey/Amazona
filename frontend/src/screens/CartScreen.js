@@ -8,14 +8,14 @@ function CartScreen(props) {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { cart } = state;
 
-  /*DELETING THE WHOLE ITEM COMPLETELY*/
+  /*DELETING THE WHOLE ITEM COMPLETELY FROM THE CART*/
   const removeFromCart = (item) => {
     ctxDispatch({
       type: 'CART_REMOVE_ITEM',
       payload: item,
     });
   };
-  /**REMOVING OR ADDING AN ITEM */
+  /**REMOVING OR ADDING AN ITEM IN THE CART*/
   const updateCartHandler = async (product, quantity) => {
     const { data } = await axios.get(`/api/products/${product._id}`);
     if (data.countInStock < quantity) {
@@ -28,6 +28,7 @@ function CartScreen(props) {
       payload: { ...product, quantity },
     });
   };
+
   return (
     <div>
       <Helmet>
@@ -48,10 +49,16 @@ function CartScreen(props) {
                 alt={product.slug}
                 className="cartItem__img"
               />
-              <h3 className="heading-3 product__name">{product.name}</h3>
+              <Link to={`/product/${product.slug}`}>
+                <h3 className="heading-3 product__name">{product.name}</h3>
+              </Link>
               <div className="cartItem__modifier">
                 <i
-                  className="fas fa-minus-circle"
+                  className={
+                    product.quantity > 1
+                      ? 'fas fa-minus-circle'
+                      : 'disabled fas fa-minus-circle'
+                  }
                   onClick={() =>
                     product.quantity > 1 &&
                     updateCartHandler(product, product.quantity - 1)
@@ -88,7 +95,11 @@ function CartScreen(props) {
                 )}
             </p>
           </h1>
-          <button className="btn">Proceed to Checkout</button>
+          <button
+            className={cart.cartItems.length > 0 ? 'btn' : 'btn__disabled'}
+          >
+            Proceed to Checkout
+          </button>
         </div>
       </div>
     </div>

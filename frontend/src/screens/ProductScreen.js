@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useEffect, useReducer } from 'react';
 import axios from 'axios';
@@ -20,13 +20,14 @@ const reducer = (state, action) => {
       return state;
   }
 };
+
 function ProductScreen() {
   const [{ loading, product, error }, dispatch] = useReducer(reducer, {
     loading: true,
     product: [],
     error: '',
   });
-
+  const navigate = useNavigate();
   const params = useParams();
   const { slug } = params;
   //FETCHING THE PRODUCT FROM THE BACKEND
@@ -60,6 +61,7 @@ function ProductScreen() {
       type: 'CART_ADD_ITEM',
       payload: { ...product, quantity },
     });
+    navigate('/cart');
   };
 
   //RENDERING THE COMPONENT

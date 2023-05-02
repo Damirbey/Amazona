@@ -16,3 +16,13 @@
     transform: translateY(3px);
   }
 }
+.btn__disabled {
+  background-color: #0d6efd;
+  color: #fff;
+  border: 0.5px solid rgb(39, 81, 247);
+  padding: 0.5rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0.2rem 0.3rem 0.4rem #ccc;
+  font-size: 1.4rem;
+  cursor: pointer;
+}

@@ -159,6 +159,23 @@ main {
       grid-column: 1/-1;
       grid-row: 0; } }
 
+.fa-plus-circle,
+.fa-minus-circle,
+.fa-trash {
+  cursor: pointer;
+  transition: all 0.2s; }
+  .fa-plus-circle:active,
+  .fa-minus-circle:active,
+  .fa-trash:active {
+    transform: translateY(2px); }
+  .fa-plus-circle:hover,
+  .fa-minus-circle:hover,
+  .fa-trash:hover {
+    color: #888; }
+
+.disabled {
+  color: #888; }
+
 .product {
   border: 1px solid #ccc;
   transition: all 0.2s;
@@ -203,6 +220,16 @@ main {
     transform: translateY(-3px); }
   .btn:active {
     transform: translateY(3px); }
+
+.btn__disabled {
+  background-color: #0d6efd;
+  color: #fff;
+  border: 0.5px solid #2751f7;
+  padding: 0.5rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0.2rem 0.3rem 0.4rem #ccc;
+  font-size: 1.4rem;
+  cursor: pointer; }
 
 .spinner {
   animation: rotate 2s linear infinite;

@@ -41,5 +41,18 @@
     grid-row: 0;
   }
 }
-.fa-plus-circle {
+.fa-plus-circle,
+.fa-minus-circle,
+.fa-trash {
+  cursor: pointer;
+  transition: all 0.2s;
+  &:active {
+    transform: translateY(2px);
+  }
+  &:hover {
+    color: #888;
+  }
+}
+.disabled {
+  color: #888;
 }
