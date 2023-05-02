@@ -18,3 +18,37 @@
     }
   }
 }
+.nav {
+  list-style-type: none;
+
+  &__item {
+    display: inline-block;
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+  &__link {
+    transition: all 0.2s;
+    &:link,
+    &:visited {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.4rem;
+    }
+    &:hover,
+    &:active {
+      color: $color-primary-gold;
+    }
+  }
+}
+.cart__quantity {
+  text-align: center;
+  font-size: 0.9rem;
+  position: absolute;
+  top: 0.4rem;
+  left: 13.5rem;
+  background-color: red;
+  padding: 0.2rem 0.3rem;
+  border-radius: 50%;
+}

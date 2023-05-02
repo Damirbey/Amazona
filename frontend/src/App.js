@@ -3,6 +3,7 @@ import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 import { Store } from './Store';
 import { useContext } from 'react';
+import CartScreen from './screens/CartScreen';
 
 function App() {
   const { state } = useContext(Store);
@@ -12,15 +13,25 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <header className="header">
-          <Link to="/" className="header__brandName">
-            amazona
-          </Link>
-          Cart {cart.cartItems.length}
+          <ul className="nav">
+            <li className="nav__item">
+              <Link to="/" className="header__brandName">
+                amazona
+              </Link>
+            </li>
+            <li className="nav__item">
+              <Link to="/cart" className="nav__link">
+                Cart
+                <span className="cart__quantity">{cart.cartItems.length}</span>
+              </Link>
+            </li>
+          </ul>
         </header>
         <main>
           <Routes>
             <Route path="/" element={<HomeScreen />} />
             <Route path="/product/:slug" element={<ProductScreen />} />
+            <Route path="/cart" element={<CartScreen />} />
           </Routes>
         </main>
         <footer className="footer">
