@@ -99,12 +99,16 @@ function CartScreen(props) {
                 )}
             </p>
           </h1>
-          <button
-            className={cart.cartItems.length > 0 ? 'btn' : 'btn__disabled'}
-            onClick={cart.cartItems.length > 0 && redirect}
-          >
-            Proceed to Checkout
-          </button>
+          {cart.cartItems.length > 0 ? (
+            <button
+              className="btn"
+              onClick={cart.cartItems.length > 0 && redirect}
+            >
+              Proceed to Checkout
+            </button>
+          ) : (
+            <button className="btn__disabled">Proceed to Checkout</button>
+          )}
         </div>
       </div>
     </div>
