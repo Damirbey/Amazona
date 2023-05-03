@@ -30,7 +30,7 @@ function CartScreen(props) {
   };
   //FUNCTION USED TO REDIRECT USER TO THE SIGN IN SCREEN ONCE THEY DECIDED TO PROCEED TO CHECKOUT
   const redirect = () => {
-    navigate('/signIn');
+    navigate('/signIn?redirect=/shipping');
   };
 
   return (

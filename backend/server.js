@@ -2,7 +2,9 @@ import express from 'express';
 import data from './data.js';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-
+import seedRouter from './routes/seedRouter.js';
+import productRouter from './routes/productRouter.js';
+import usersRouter from './routes/usersRouter.js';
 //LOADING .env file variables
 dotenv.config();
 
@@ -18,30 +20,19 @@ mongoose
 
 const app = express();
 const port = process.env.PORT || 5000;
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-//GETTING ALL PRODUCTS
-app.get('/api/products', (req, res) => {
-  res.send(data.products);
-});
+//INSERTING ALL PRODUCTS
+app.use('/api/seed', seedRouter);
+//RETRIEVING PRODUCTS
+app.use('/api/products', productRouter);
+//SIGN IN API
+app.use('/api/users', usersRouter);
 
-//FETCHING SPECIFIC PRODUCT USING IT'S SLUG PROPERTY
-app.get('/api/products/slug/:slug', (req, res) => {
-  const foundProduct = data.products.find((x) => x.slug == req.params.slug);
-
-  if (foundProduct) {
-    res.send(foundProduct);
-  } else {
-    res.status(404).send({ message: 'Product Not Found' });
-  }
-});
-//FETCHING SPECIFIC PRODUCT USING IT'S ID
-app.get('/api/products/:id', (req, res) => {
-  const foundProduct = data.products.find((x) => x._id == req.params.id);
-  if (foundProduct) {
-    res.send(foundProduct);
-  } else {
-    res.status(404).send({ message: 'Product Not Found' });
-  }
+//ERROR HANDLING API
+app.use((err, req, res, next) => {
+  res.status(500).send({ message: err.message });
 });
 
 //RUNNING THE SERVER
