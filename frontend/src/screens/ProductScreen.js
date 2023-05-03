@@ -107,9 +107,9 @@ function ProductScreen() {
             <p>Status:</p>
             <p>
               {product.countInStock > 0 ? (
-                <div className="inStock">Available</div>
+                <span className="inStock">Available</span>
               ) : (
-                <div className="outOfStock">Out of stock</div>
+                <span className="outOfStock">Out of stock</span>
               )}
             </p>
 

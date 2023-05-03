@@ -24,7 +24,7 @@
   &__item {
     display: inline-block;
     &:not(:last-child) {
-      margin-right: 1rem;
+      margin-right: 1.5rem;
     }
   }
   &__link {
@@ -47,7 +47,7 @@
   font-size: 0.9rem;
   position: absolute;
   top: 0.4rem;
-  left: 13.5rem;
+  left: 13.8rem;
   background-color: red;
   padding: 0.2rem 0.3rem;
   border-radius: 50%;

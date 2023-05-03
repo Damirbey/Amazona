@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { getError } from '../utils.js';
 import { toast } from 'react-toastify';
@@ -9,6 +9,7 @@ function SignInScreen() {
   const navigate = useNavigate();
   //EXTRACTING GLOBAL STATES
   const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { userInfo } = state;
   //RETREIVING THE REDIRECT QUERY STRING
   const { search } = useLocation();
   const redirectInUrl = new URLSearchParams(search).get('redirect');
@@ -33,6 +34,11 @@ function SignInScreen() {
       toast(getError(err));
     }
   };
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect);
+    }
+  }, []);
 
   return (
     <div className="signIn">
