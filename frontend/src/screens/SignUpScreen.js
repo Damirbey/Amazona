@@ -15,16 +15,21 @@ function SignUpScreen() {
   const redirectInUrl = new URLSearchParams(search).get('redirect');
   const redirect = redirectInUrl ? redirectInUrl : '/';
   //DECLARING STATES
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   //FUNCTION IS CALLED WHEN USER SUBMITS THE FORM
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-
+    if (password !== confirmPassword) {
+      toast('Passwords do not match!');
+      return;
+    }
     try {
-      const { data } = await axios.post('/api/users/signIn', {
+      const { data } = await axios.post('/api/users/signUp', {
         email,
+        name,
         password,
       });
       ctxDispatch({ type: 'USER_SIGNIN', payload: data });
@@ -42,8 +47,19 @@ function SignUpScreen() {
 
   return (
     <div className="signIn">
-      <h1 className="heading-1">Please Sign In</h1>
+      <h1 className="heading-1">Please Sign Up</h1>
       <form className="form" onSubmit={onSubmitHandler} method="POST">
+        <label className="form__label" htmlFor="name">
+          Name
+        </label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          className="form__input"
+          required
+          onChange={(e) => setName(e.target.value)}
+        />
         <label className="form__label" htmlFor="email">
           Email
         </label>

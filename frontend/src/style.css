@@ -210,6 +210,8 @@ main {
       border-bottom: 0.2rem solid #ff7730; }
   .form__label {
     color: #000; }
+  .form__payment {
+    text-align: left; }
 
 .product {
   border: 1px solid #ccc;
