@@ -324,3 +324,14 @@ main {
   border-radius: 10px;
   font-weight: bold;
   font-size: 0.9rem; }
+
+.checkout-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(min-content, 1fr)); }
+  .checkout-steps > * {
+    padding-bottom: 0.2rem;
+    border-bottom: 0.2rem solid #a0a0a0;
+    color: #a0a0a0; }
+  .checkout-steps > *.active {
+    border-bottom: 0.2rem solid #f08000;
+    color: #f08000; }

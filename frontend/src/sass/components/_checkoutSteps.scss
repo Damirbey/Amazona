@@ -1,0 +1,14 @@
+.checkout-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(min-content, 1fr));
+
+  & > * {
+    padding-bottom: 0.2rem;
+    border-bottom: 0.2rem solid #a0a0a0;
+    color: #a0a0a0;
+  }
+  & > *.active {
+    border-bottom: 0.2rem solid #f08000;
+    color: #f08000;
+  }
+}

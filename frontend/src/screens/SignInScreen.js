@@ -38,7 +38,7 @@ function SignInScreen() {
     if (userInfo) {
       navigate(redirect);
     }
-  }, []);
+  }, [navigate,redirect,userInfo]);
 
   return (
     <div className="signIn">
