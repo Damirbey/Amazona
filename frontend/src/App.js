@@ -7,7 +7,8 @@ import CartScreen from './screens/CartScreen';
 import SignInScreen from './screens/SignInScreen';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ShippingScreen from './screens/ShippingScreen';
+import ShippingAddressScreen from './screens/ShippingAddressScreen';
+import PaymentScreen from './screens/PaymentScreen';
 
 function App() {
   //EXTRACTING GLOBAL STATES FROM THE CONTEXT STORE
@@ -17,6 +18,7 @@ function App() {
   const onSignOutHandler = () => {
     ctxDispatch({ type: 'USER_SIGNOUT' });
     localStorage.removeItem('userInfo');
+    localStorage.removeItem('shippingAddress');
   };
   return (
     <BrowserRouter>
@@ -74,7 +76,8 @@ function App() {
             <Route path="/product/:slug" element={<ProductScreen />} />
             <Route path="/cart" element={<CartScreen />} />
             <Route path="/signIn" element={<SignInScreen />} />
-            <Route path="/shipping" element={<ShippingScreen/>}/>
+            <Route path="/shipping" element={<ShippingAddressScreen />} />
+            <Route path="/payment" element={<PaymentScreen />} />
           </Routes>
         </main>
         <footer className="footer">
