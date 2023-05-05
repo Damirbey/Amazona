@@ -1,9 +1,38 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Store } from '../Store';
 import CheckoutSteps from '../components/CheckoutSteps';
+import { toast } from 'react-toastify';
 
 function PlaceOrderScreen() {
+  //RETRIEVING GLOBAL STATES
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const {
+    userInfo,
+    cart,
+    cart: { paymentMethod, shippingAddress },
+  } = state;
+  //CHECKING IF USER IS AUTHORIZED TO BE ON THIS PAGE
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!paymentMethod) {
+      navigate('/payment');
+    }
+  }, [paymentMethod, navigate]);
+  //CALCULATING PRICES INSIDE THE CART
+  cart.itemPrices = cart.cartItems.reduce(
+    (a, c) => a + c.price * c.quantity,
+    0
+  );
+  cart.shippingPrice = cart.itemPrices > 100 ? 0 : 10;
+  cart.taxPrice = 0.15 * cart.itemPrices;
+  cart.totalPrice = cart.shippingPrice + cart.taxPrice + cart.itemPrices;
+  //WHEN PLACE ORDER BUTTON IS CLICKED
+  const placeOrderHandler = (e) => {
+    e.preventDefault();
+    toast('ORDER IS PLACED!!!');
+  };
+
   return (
     <div>
       <CheckoutSteps step1 step2 step3 step4 />
@@ -12,47 +41,71 @@ function PlaceOrderScreen() {
           <div className="order__details__shipping">
             <h3 className="heading-3">Shipping</h3>
             <p>
-              <span>Name:</span> Damir Yodgorov
+              <span>Name:</span> {shippingAddress.name}
             </p>
             <p>
-              <span>Address:</span>Random Address
+              <span>Address: </span>
+              {shippingAddress.address}
             </p>
 
-            <Link to="/payment">Edit</Link>
+            <Link to="/shipping">Edit</Link>
           </div>
           <div className="order__details__payment">
             <h3 className="heading-3">Payment</h3>
             <p>
-              <span>Method:</span> PayPal
+              <span>Method:</span> {paymentMethod}
             </p>
             <Link to="/payment">Edit</Link>
           </div>
           <div className="order__details__items">
             <h3 className="heading-3">Items</h3>
+
+            {state.cart.cartItems.map((product) => (
+              <div
+                className="cartItem"
+                style={{ border: 'none' }}
+                key={product._id}
+              >
+                <img
+                  src={product.image}
+                  alt={product.slug}
+                  className="cartItem__img"
+                />
+                <Link to={`/product/${product.slug}`}>
+                  <h3 className="heading-3 product__name">{product.name}</h3>
+                </Link>
+
+                <p className="cartItem__price">${product.price}</p>
+              </div>
+            ))}
+            <br />
+            <Link to="/cart">Edit</Link>
           </div>
         </div>
 
         <div className="order__summary">
           <h3 className="heading-3">Order Summary</h3>
-          <table>
-            <tr>
-              <td>Items</td>
-              <td>$240</td>
-            </tr>
-            <tr>
-              <td>Shipping</td>
-              <td>$0</td>
-            </tr>
-            <tr>
-              <td>Tax</td>
-              <td>$36</td>
-            </tr>
-            <tr>
-              <td>Order Total</td>
-              <td>$276</td>
-            </tr>
-          </table>
-          <button className="btn">Place Order</button>
+          <div className="order__price">
+            <div>
+              <p>Items</p>
+              <span>${cart.itemPrices.toFixed(2)}</span>
+            </div>
+            <div>
+              <p>Shipping</p>
+              <span>${cart.shippingPrice.toFixed(2)}</span>
+            </div>
+            <div>
+              <p>Tax</p>
+              <span>${cart.taxPrice.toFixed(2)}</span>
+            </div>
+            <div>
+              <p style={{ fontWeight: 'bold' }}>Order Total</p>
+              <span>${cart.totalPrice.toFixed(2)}</span>
+            </div>
+          </div>
+          <button className="btn" onClick={placeOrderHandler}>
+            Place Order
+          </button>
         </div>
       </div>
     </div>
