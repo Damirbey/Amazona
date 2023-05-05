@@ -1,0 +1,29 @@
+.order {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, min-content));
+  grid-gap: 2rem;
+  &__details {
+    grid-column: 1 / 5;
+
+    & > * {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      padding-bottom: 1.5rem;
+      padding-left: 1.5rem;
+    }
+    &__shipping {
+    }
+    &__payment {
+    }
+    &__items {
+    }
+  }
+  &__summary {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    max-height: 20rem;
+    padding: 2rem;
+  }
+}
