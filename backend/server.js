@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import seedRouter from './routes/seedRouter.js';
 import productRouter from './routes/productRouter.js';
 import usersRouter from './routes/usersRouter.js';
+import orderRouter from './routes/orderRouter.js';
 //LOADING .env file variables
 dotenv.config();
 
@@ -29,6 +30,8 @@ app.use('/api/seed', seedRouter);
 app.use('/api/products', productRouter);
 //SIGN IN API
 app.use('/api/users', usersRouter);
+//PLACING AN ORDER
+app.use('/api/orders', orderRouter);
 
 //ERROR HANDLING API
 app.use((err, req, res, next) => {

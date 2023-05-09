@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Store } from '../Store';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { toast } from 'react-toastify';
+import { getError } from '../utils';
+import axios from 'axios';
 
 //DECLARED REDUCER TO MANAGE COMPLEX STATES
 const reducer = (state, action) => {
@@ -23,6 +25,7 @@ function PlaceOrderScreen() {
   const [{ loading }, dispatch] = useReducer(reducer, {
     loading: false,
   });
+
   //RETRIEVING GLOBAL STATES
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {
@@ -30,6 +33,7 @@ function PlaceOrderScreen() {
     cart,
     cart: { paymentMethod, shippingAddress },
   } = state;
+
   //CHECKING IF USER IS AUTHORIZED TO BE ON THIS PAGE
   const navigate = useNavigate();
   useEffect(() => {
@@ -37,6 +41,7 @@ function PlaceOrderScreen() {
       navigate('/payment');
     }
   }, [paymentMethod, navigate]);
+
   //CALCULATING PRICES INSIDE THE CART
   cart.itemPrices = cart.cartItems.reduce(
     (a, c) => a + c.price * c.quantity,
@@ -46,9 +51,35 @@ function PlaceOrderScreen() {
   cart.taxPrice = 0.15 * cart.itemPrices;
   cart.totalPrice = cart.shippingPrice + cart.taxPrice + cart.itemPrices;
   //WHEN PLACE ORDER BUTTON IS CLICKED
-  const placeOrderHandler = (e) => {
+  const placeOrderHandler = async (e) => {
     e.preventDefault();
-    toast('ORDER IS PLACED!!!');
+    try {
+      dispatch({ type: 'FETCH_REQUEST' });
+      const { data } = await axios.post(
+        '/api/orders',
+        {
+          orderItems: cart.cartItems,
+          shippingAddress: cart.shippingAddress,
+          paymentMethod: cart.paymentMethod,
+          itemsPrice: cart.itemPrices,
+          shippingPrice: cart.shippingPrice,
+          taxPrice: cart.taxPrice,
+          totalPrice: cart.totalPrice,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
+      ctxDispatch({ type: 'CART_CLEAR' });
+      localStorage.removeItem('cartItems');
+      dispatch({ type: 'FETCH_SUCCESS' });
+      navigate(`/order/${data.order._id}`);
+    } catch (err) {
+      dispatch({ type: 'FETCH_FAIL' });
+      toast.error(getError(err));
+    }
   };
 
   return (
