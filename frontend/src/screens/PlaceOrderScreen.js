@@ -1,10 +1,28 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Store } from '../Store';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { toast } from 'react-toastify';
 
+//DECLARED REDUCER TO MANAGE COMPLEX STATES
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'FETCH_REQUEST':
+      return { ...state, loading: true };
+    case 'FETCH_SUCCESS':
+      return { ...state, loading: false };
+    case 'FETCH_FAIL':
+      return { ...state, loading: false };
+    default:
+      return state;
+  }
+};
+
 function PlaceOrderScreen() {
+  //MANAGING STATES BY THE REDUCER HOOKs
+  const [{ loading }, dispatch] = useReducer(reducer, {
+    loading: false,
+  });
   //RETRIEVING GLOBAL STATES
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {
