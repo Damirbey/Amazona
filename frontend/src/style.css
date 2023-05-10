@@ -36,9 +36,8 @@ code {
 .nav {
   list-style-type: none; }
   .nav__item {
-    display: inline-block; }
-    .nav__item:not(:last-child) {
-      margin-right: 1.5rem; }
+    display: inline-block;
+    margin-right: 2rem; }
   .nav__link {
     transition: all 0.2s; }
     .nav__link:link, .nav__link:visited {
@@ -48,13 +47,15 @@ code {
       font-size: 1.4rem; }
     .nav__link:hover, .nav__link:active {
       color: #f5c518; }
+  .nav__left-section {
+    float: right; }
 
 .cart__quantity {
   text-align: center;
   font-size: 0.9rem;
   position: absolute;
   top: 0.4rem;
-  left: 13.8rem;
+  right: 8rem;
   background-color: red;
   padding: 0.2rem 0.3rem;
   border-radius: 50%; }

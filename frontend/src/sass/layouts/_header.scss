@@ -23,9 +23,7 @@
 
   &__item {
     display: inline-block;
-    &:not(:last-child) {
-      margin-right: 1.5rem;
-    }
+    margin-right: 2rem;
   }
   &__link {
     transition: all 0.2s;
@@ -41,13 +39,16 @@
       color: $color-primary-gold;
     }
   }
+  &__left-section{
+    float:right;
+  }
 }
 .cart__quantity {
   text-align: center;
   font-size: 0.9rem;
   position: absolute;
   top: 0.4rem;
-  left: 13.8rem;
+  right: 8rem;
   background-color: red;
   padding: 0.2rem 0.3rem;
   border-radius: 50%;

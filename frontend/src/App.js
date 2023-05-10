@@ -46,6 +46,7 @@ function App() {
                 amazona
               </Link>
             </li>
+            <div className='nav__left-section'>
             <li className="nav__item">
               <Link to="/cart" className="nav__link">
                 Cart
@@ -72,6 +73,8 @@ function App() {
                 </Link>
               </li>
             )}
+            </div>
+            
           </ul>
         </header>
         <main>
