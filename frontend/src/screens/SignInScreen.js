@@ -4,6 +4,7 @@ import axios from 'axios';
 import { getError } from '../utils.js';
 import { toast } from 'react-toastify';
 import { Store } from '../Store.js';
+import { Helmet } from 'react-helmet-async';
 
 function SignInScreen() {
   const navigate = useNavigate();
@@ -38,10 +39,13 @@ function SignInScreen() {
     if (userInfo) {
       navigate(redirect);
     }
-  }, [navigate,redirect,userInfo]);
+  }, [navigate, redirect, userInfo]);
 
   return (
     <div className="signIn">
+      <Helmet>
+        <title>Sign In</title>
+      </Helmet>
       <h1 className="heading-1">Please Sign In</h1>
       <form className="form" onSubmit={onSubmitHandler} method="POST">
         <label className="form__label" htmlFor="email">

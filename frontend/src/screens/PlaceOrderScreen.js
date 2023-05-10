@@ -5,6 +5,8 @@ import CheckoutSteps from '../components/CheckoutSteps';
 import { toast } from 'react-toastify';
 import { getError } from '../utils';
 import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
+import Spinner from '../components/Spinner';
 
 //DECLARED REDUCER TO MANAGE COMPLEX STATES
 const reducer = (state, action) => {
@@ -84,6 +86,9 @@ function PlaceOrderScreen() {
 
   return (
     <div>
+      <Helmet>
+        <title>Place Order</title>
+      </Helmet>
       <CheckoutSteps step1 step2 step3 step4 />
       <div className="order">
         <div className="order__details">
@@ -155,6 +160,7 @@ function PlaceOrderScreen() {
           <button className="btn" onClick={placeOrderHandler}>
             Place Order
           </button>
+          {loading && <Spinner />}
         </div>
       </div>
     </div>

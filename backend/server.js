@@ -33,6 +33,10 @@ app.use('/api/users', usersRouter);
 //PLACING AN ORDER
 app.use('/api/orders', orderRouter);
 
+//RETURNING PAYPAL CLIENT ID
+app.get('/api/keys/paypal', (req, res) => {
+  res.send(process.env.PAYPAL_CLIENT_ID || 'sb');
+});
 //ERROR HANDLING API
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
