@@ -12,6 +12,7 @@ import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
+import OrderHistoryScreen from './screens/OrderHistoryScreen';
 
 function App() {
   //EXTRACTING GLOBAL STATES FROM THE CONTEXT STORE
@@ -60,6 +61,11 @@ function App() {
                     {userInfo.name}
                   </Link>
                 </li>
+                <li className="nav__item">
+                  <Link to="/orderHistory" className="nav__link">
+                    Order History
+                  </Link>
+                </li>
                 <li className="nav__item" onClick={onSignOutHandler}>
                   <Link to="/" className="nav__link">
                     Sign Out
@@ -88,6 +94,7 @@ function App() {
             <Route path="/payment" element={<PaymentScreen />} />
             <Route path="/placeOrder" element={<PlaceOrderScreen />} />
             <Route path="order/:id" element={<OrderScreen />} />
+            <Route path="/orderHistory" element={<OrderHistoryScreen/>}/>
           </Routes>
         </main>
         <footer className="footer">
