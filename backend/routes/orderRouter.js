@@ -24,12 +24,24 @@ orderRouter.post(
   })
 );
 orderRouter.get(
+  '/mine',
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const orders = await Order.find({ user: req.user._id });
+    console.log('All orders', orders);
+    if (orders) {
+      res.send(orders);
+    } else {
+      res.status(404).send({ message: 'Orders Not Found' });
+    }
+  })
+);
+
+orderRouter.get(
   '/:id',
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    console.log('INSIDE');
     const order = await Order.findById(req.params.id);
-    console.log('ORDER IS ', order);
     if (order) {
       res.send(order);
     } else {

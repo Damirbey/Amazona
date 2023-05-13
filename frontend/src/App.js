@@ -47,40 +47,41 @@ function App() {
                 amazona
               </Link>
             </li>
-            <div className='nav__left-section'>
-            <li className="nav__item">
-              <Link to="/cart" className="nav__link">
-                Cart
-                <span className="cart__quantity">{cart.cartItems.length}</span>
-              </Link>
-            </li>
-            {userInfo ? (
-              <span>
-                <li className="nav__item">
-                  <Link to="/" className="nav__link">
-                    {userInfo.name}
-                  </Link>
-                </li>
-                <li className="nav__item">
-                  <Link to="/orderHistory" className="nav__link">
-                    Order History
-                  </Link>
-                </li>
-                <li className="nav__item" onClick={onSignOutHandler}>
-                  <Link to="/" className="nav__link">
-                    Sign Out
-                  </Link>
-                </li>
-              </span>
-            ) : (
+            <div className="nav__left-section">
               <li className="nav__item">
-                <Link to="/signIn" className="nav__link">
-                  Sign In
+                <Link to="/cart" className="nav__link">
+                  Cart
+                  <span className="cart__quantity">
+                    {cart.cartItems.length}
+                  </span>
                 </Link>
               </li>
-            )}
+              {userInfo ? (
+                <span>
+                  <li className="nav__item">
+                    <Link to="/" className="nav__link">
+                      {userInfo.name}
+                    </Link>
+                  </li>
+                  <li className="nav__item">
+                    <Link to="/orderHistory" className="nav__link">
+                      Order History
+                    </Link>
+                  </li>
+                  <li className="nav__item" onClick={onSignOutHandler}>
+                    <Link to="/" className="nav__link">
+                      Sign Out
+                    </Link>
+                  </li>
+                </span>
+              ) : (
+                <li className="nav__item">
+                  <Link to="/signIn" className="nav__link">
+                    Sign In
+                  </Link>
+                </li>
+              )}
             </div>
-            
           </ul>
         </header>
         <main>
@@ -93,8 +94,8 @@ function App() {
             <Route path="/shipping" element={<ShippingAddressScreen />} />
             <Route path="/payment" element={<PaymentScreen />} />
             <Route path="/placeOrder" element={<PlaceOrderScreen />} />
-            <Route path="order/:id" element={<OrderScreen />} />
-            <Route path="/orderHistory" element={<OrderHistoryScreen/>}/>
+            <Route path="/order/:id" element={<OrderScreen />} />
+            <Route path="/orderHistory" element={<OrderHistoryScreen />} />
           </Routes>
         </main>
         <footer className="footer">
