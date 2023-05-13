@@ -135,7 +135,7 @@ function OrderScreen() {
   return (
     <div>
       <Helmet>
-        <title>Order Details</title>
+        <title>Order Details Tab</title>
       </Helmet>
 
       {loading ? (
