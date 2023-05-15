@@ -13,6 +13,7 @@ import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
+import UserProfileScreen from './screens/UserProfileScreen';
 
 function App() {
   //EXTRACTING GLOBAL STATES FROM THE CONTEXT STORE
@@ -101,6 +102,7 @@ function App() {
             <Route path="/placeOrder" element={<PlaceOrderScreen />} />
             <Route path="/order/:id" element={<OrderScreen />} />
             <Route path="/orderHistory" element={<OrderHistoryScreen />} />
+            <Route path="/userProfile" element={<UserProfileScreen/>}/>
           </Routes>
         </main>
         <footer className="footer">
