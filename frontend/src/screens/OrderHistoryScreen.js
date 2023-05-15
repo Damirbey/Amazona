@@ -4,6 +4,7 @@ import { Store } from '../Store';
 import { useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Spinner from '../components/Spinner';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -52,35 +53,39 @@ function OrderHistoryScreen() {
         <title>Order History</title>
       </Helmet>
       <h1 className="heading-1">Order History</h1>
-      <table className="orderHistory_table">
-        <tr>
-          <th>ID</th>
-          <th>DATE</th>
-          <th>TOTAL</th>
-          <th>PAID</th>
-          <th>DELIVERED</th>
-          <th>ACTIONS</th>
-        </tr>
-        {orders.map((order) => {
-          return (
-            <tr>
-              <td>{order._id}</td>
-              <td>{order.createdAt.substring(0, 10)}</td>
-              <td>{order.totalPrice}</td>
-              <td>{order.isPaid ? order.paidAt.substring(0, 10) : 'NO'}</td>
-              <td>{order.isDelivered ? 'YES' : 'NO'}</td>
-              <td>
-                <button
-                  onClick={() => navigate(`/order/${order._id}`)}
-                  className="orderHistory_details_btn"
-                >
-                  DETAILS
-                </button>
-              </td>
-            </tr>
-          );
-        })}
-      </table>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <table className="orderHistory_table">
+          <tr>
+            <th>ID</th>
+            <th>DATE</th>
+            <th>TOTAL</th>
+            <th>PAID</th>
+            <th>DELIVERED</th>
+            <th>ACTIONS</th>
+          </tr>
+          {orders.map((order) => {
+            return (
+              <tr>
+                <td>{order._id}</td>
+                <td>{order.createdAt.substring(0, 10)}</td>
+                <td>{order.totalPrice}</td>
+                <td>{order.isPaid ? order.paidAt.substring(0, 10) : 'NO'}</td>
+                <td>{order.isDelivered ? 'YES' : 'NO'}</td>
+                <td>
+                  <button
+                    onClick={() => navigate(`/order/${order._id}`)}
+                    className="orderHistory_details_btn"
+                  >
+                    Details
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
+        </table>
+      )}
     </div>
   );
 }

@@ -64,6 +64,11 @@ function App() {
                     </Link>
                   </li>
                   <li className="nav__item">
+                    <Link to="/userProfile" className="nav__link">
+                      User Profile
+                    </Link>
+                  </li>
+                  <li className="nav__item">
                     <Link to="/orderHistory" className="nav__link">
                       Order History
                     </Link>
