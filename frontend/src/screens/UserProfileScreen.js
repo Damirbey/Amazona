@@ -49,7 +49,9 @@ function UserProfileScreen() {
       );
       ctxDispatch({ type: 'USER_SIGNIN', payload: data });
       dispatch({ type: 'UPDATE_SUCCESS' });
+      toast('User updated successfully');
       localStorage.setItem('userInfo', JSON.stringify(data));
+      window.location.href = '/';
     } catch (error) {
       toast.error(getError(error));
       dispatch({ type: 'REQUEST_FAIL', payload: error });

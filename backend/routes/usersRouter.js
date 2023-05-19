@@ -4,7 +4,7 @@ import expressAsyncHandler from 'express-async-handler';
 import { generateToken, isAuth } from '../utils.js';
 import bcrypt from 'bcryptjs';
 const usersRouter = express.Router();
-
+//SIGNING IN USER
 usersRouter.post(
   '/signIn',
   expressAsyncHandler(async (req, res) => {
@@ -26,6 +26,7 @@ usersRouter.post(
     }
   })
 );
+//SIGNING UP NEW USER
 usersRouter.post(
   '/signUp',
   expressAsyncHandler(async (req, res) => {
@@ -44,9 +45,30 @@ usersRouter.post(
     });
   })
 );
+//UPDATING USER PROFILE
 usersRouter.put(
   '/userProfile',
   isAuth,
-  expressAsyncHandler(async (req, res) => {})
+  expressAsyncHandler(async (req, res) => {
+    const user = await Users.findById(req.user._id);
+    if (user) {
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+      if (req.body.password) {
+        user.password = bcrypt.hashSync(req.body.password);
+      }
+      const updatedUser = await user.save();
+      res.send({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+        token: generateToken(updatedUser),
+      });
+    } else {
+      res.status(404).send({ message: 'User not found' });
+    }
+  })
 );
+
 export default usersRouter;

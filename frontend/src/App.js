@@ -25,6 +25,7 @@ function App() {
     localStorage.removeItem('userInfo');
     localStorage.removeItem('shippingAddress');
     localStorage.removeItem('paymentMethod');
+    window.location.href = '/signin';
   };
   return (
     <BrowserRouter>
@@ -102,7 +103,7 @@ function App() {
             <Route path="/placeOrder" element={<PlaceOrderScreen />} />
             <Route path="/order/:id" element={<OrderScreen />} />
             <Route path="/orderHistory" element={<OrderHistoryScreen />} />
-            <Route path="/userProfile" element={<UserProfileScreen/>}/>
+            <Route path="/userProfile" element={<UserProfileScreen />} />
           </Routes>
         </main>
         <footer className="footer">
