@@ -1,7 +1,7 @@
 import Users from '../models/usersModel.js';
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
-import { generateToken } from '../utils.js';
+import { generateToken, isAuth } from '../utils.js';
 import bcrypt from 'bcryptjs';
 const usersRouter = express.Router();
 
@@ -43,5 +43,10 @@ usersRouter.post(
       token: generateToken(user),
     });
   })
+);
+usersRouter.put(
+  '/userProfile',
+  isAuth,
+  expressAsyncHandler(async (req, res) => {})
 );
 export default usersRouter;
