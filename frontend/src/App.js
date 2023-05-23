@@ -58,36 +58,34 @@ function App() {
                   </span>
                 </Link>
               </li>
-              {userInfo ? (
-                <span>
-                  <li className="nav__item">
+              <li className="nav__item">
+                {userInfo ? (
+                  <div className="userProfile ">
                     <Link to="/" className="nav__link">
                       {userInfo.name}
                     </Link>
-                  </li>
-                  <li className="nav__item">
-                    <Link to="/userProfile" className="nav__link">
-                      User Profile
-                    </Link>
-                  </li>
-                  <li className="nav__item">
-                    <Link to="/orderHistory" className="nav__link">
-                      Order History
-                    </Link>
-                  </li>
-                  <li className="nav__item" onClick={onSignOutHandler}>
-                    <Link to="/" className="nav__link">
-                      Sign Out
-                    </Link>
-                  </li>
-                </span>
-              ) : (
-                <li className="nav__item">
+                    <div className="userProfile__links">
+                      <Link to="/userProfile" className="nav__link">
+                        User Profile
+                      </Link>
+                      <Link to="/orderHistory" className="nav__link">
+                        Order History
+                      </Link>
+                      <Link
+                        to="/"
+                        className="nav__link"
+                        onClick={onSignOutHandler}
+                      >
+                        Sign Out
+                      </Link>
+                    </div>
+                  </div>
+                ) : (
                   <Link to="/signIn" className="nav__link">
                     Sign In
                   </Link>
-                </li>
-              )}
+                )}
+              </li>
             </div>
           </ul>
         </header>

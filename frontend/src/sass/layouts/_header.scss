@@ -7,6 +7,7 @@
   align-content: center;
   &__brandName {
     width: 3rem;
+    position: absolute;
     color: #fff;
     font-weight: bold;
     font-size: 1.4rem;
@@ -23,10 +24,15 @@
 
   &__item {
     display: inline-block;
-    margin-right: 2rem;
+    &:last-child {
+      margin-right: 5rem;
+    }
   }
   &__link {
+    padding: 1rem;
+    display: block;
     transition: all 0.2s;
+
     &:link,
     &:visited {
       color: #fff;
@@ -39,17 +45,39 @@
       color: $color-primary-gold;
     }
   }
-  &__left-section{
-    float:right;
+  &__left-section {
+    float: right;
   }
 }
 .cart__quantity {
   text-align: center;
   font-size: 0.9rem;
-  position: absolute;
-  top: 0.4rem;
-  right: 8.1rem;
+  position: relative;
+  top: -0.4rem;
+  left: 0.2rem;
   background-color: red;
   padding: 0.2rem 0.3rem;
   border-radius: 50%;
+}
+
+.userProfile {
+  width: 2rem;
+  display: block;
+  transition: all 0.2s;
+
+  &__links {
+    display: none;
+    max-width: 180px;
+    background-color: #404040;
+    color: #404040;
+    transition: all 0.2s;
+  }
+
+  &:hover &__links {
+    display: block;
+    position: absolute;
+    top: 3.04rem;
+    right: 0.1rem;
+    color: #404040;
+  }
 }
