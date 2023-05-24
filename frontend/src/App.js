@@ -6,7 +6,7 @@ import { React, useContext } from 'react';
 import CartScreen from './screens/CartScreen';
 import SignInScreen from './screens/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import PaymentScreen from './screens/PaymentScreen';
@@ -27,6 +27,10 @@ function App() {
     localStorage.removeItem('paymentMethod');
     window.location.href = '/signin';
   };
+  // FUNCTION USED TO EXPAND THE NAVBAR
+  const expandNavbar = () => {
+    toast('YES CLICKED');
+  };
   return (
     <BrowserRouter>
       <div className="App">
@@ -43,7 +47,20 @@ function App() {
             pauseOnHover
             theme="light"
           />
-          <ul className="nav">
+          <div class="sidebar"></div>
+
+          <div class="topnav" id="myTopnav">
+            <Link to="#home" class="active">
+              Amazona
+            </Link>
+            <Link to="#news">News</Link>
+            <Link href="#contact">Contact</Link>
+            <Link href="#about">About</Link>
+            <Link class="icon" onClick={expandNavbar}>
+              <i class="fa fa-bars"></i>
+            </Link>
+          </div>
+          {/*<ul className="nav">
             <li className="nav__item">
               <Link to="/" className="header__brandName">
                 amazona
@@ -57,6 +74,16 @@ function App() {
                     {cart.cartItems.length}
                   </span>
                 </Link>
+              </li>
+              <li className="nav__item">
+                <div class="dropdown">
+                  Dropdown
+                  <div class="dropdown-content">
+                    <a href="#">Link 1</a>
+                    <a href="#">Link 2</a>
+                    <a href="#">Link 3</a>
+                  </div>
+                </div>
               </li>
               <li className="nav__item">
                 {userInfo ? (
@@ -87,7 +114,7 @@ function App() {
                 )}
               </li>
             </div>
-          </ul>
+                </ul>*/}
         </header>
         <main>
           <Routes>
