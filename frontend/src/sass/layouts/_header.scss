@@ -1,9 +1,8 @@
 .header {
   background-color: #404040;
-
   grid-row: 1/2;
   grid-column: full-start/full-end;
-
+  height: 58px;
   /*&__brandName {
     width: 3rem;
     position: absolute;
@@ -124,11 +123,14 @@
 
 .nav {
   width: 100%;
-  background-color: #4d4d4d;
+
+  background-color: #404040;
   position: relative;
 }
 
 .nav > .nav-header {
+  position: absolute;
+  left: 10rem;
   display: inline;
 }
 
@@ -147,11 +149,14 @@
 .nav > .nav-links {
   display: inline;
   float: right;
+  position: relative;
+  right: 10rem;
   font-size: 18px;
 }
 
 .nav > .nav-links > a,
-.nav > .nav-links > span > a {
+.nav > .nav-links > span > a,
+.nav > .nav-links > span > div > a {
   display: inline-block;
   padding: 1.15rem;
   text-decoration: none;
@@ -170,6 +175,9 @@
 }
 
 @media (max-width: 700px) {
+  .nav > .nav-header {
+    left: 0rem;
+  }
   .nav > .nav-btn {
     display: inline-block;
     position: absolute;
@@ -258,8 +266,14 @@
 .dropdown:hover .dropdown-content {
   display: block;
 }
-
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {
-  background-color: #3e8e41;
+.cart__quantity {
+  font-weight: bold;
+  text-align: center;
+  font-size: 0.9rem;
+  position: relative;
+  top: -0.4rem;
+  left: 0.2rem;
+  background-color: red;
+  padding: 0.2rem 0.3rem;
+  border-radius: 50%;
 }

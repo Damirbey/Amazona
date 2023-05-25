@@ -71,21 +71,22 @@ function App() {
             </div>
 
             <div className="nav-links">
-              <Link to="/cart">Cart</Link>
+              <Link to="/cart">
+                Cart
+                <span className="cart__quantity">{cart.cartItems.length}</span>
+              </Link>
               {userInfo ? (
                 <span>
-                  <Link to="/">{userInfo.name}</Link>
-                  <Link to="/userProfile">User Profile</Link>
-                  <Link to="/orderHistory">Order History</Link>
-                  <Link to="/" onClick={onSignOutHandler}>
-                    Sign Out
-                  </Link>
                   <div class="dropdown">
-                    <button class="dropbtn">Dropdown</button>
+                    <Link to="/">
+                      {userInfo.name} <i class="fas fa-solid fa-caret-down"></i>
+                    </Link>
                     <div class="dropdown-content">
-                      <a href="#">Link 1</a>
-                      <a href="#">Link 2</a>
-                      <a href="#">Link 3</a>
+                      <Link to="/userProfile">User Profile</Link>
+                      <Link to="/orderHistory">Order History</Link>
+                      <Link to="/" onClick={onSignOutHandler}>
+                        Sign Out
+                      </Link>
                     </div>
                   </div>
                 </span>
