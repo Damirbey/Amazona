@@ -29,7 +29,12 @@ function App() {
   };
   // FUNCTION USED TO EXPAND THE NAVBAR
   const expandNavbar = () => {
-    toast('YES CLICKED');
+    var x = document.getElementById('myTopnav');
+    if (x.className === 'topnav') {
+      x.className += ' responsive';
+    } else {
+      x.className = 'topnav';
+    }
   };
   return (
     <BrowserRouter>
@@ -47,19 +52,49 @@ function App() {
             pauseOnHover
             theme="light"
           />
-          <div class="sidebar"></div>
+          <div className="sidebar"></div>
+          {/**NAVIGATION */}
+          <div className="nav">
+            <input type="checkbox" id="nav-check" />
+            <div className="nav-header">
+              <Link className="nav-title" to="/">
+                Amazona
+              </Link>
+            </div>
 
-          <div class="topnav" id="myTopnav">
-            <Link to="#home" class="active">
-              Amazona
-            </Link>
-            <Link to="#news">News</Link>
-            <Link href="#contact">Contact</Link>
-            <Link href="#about">About</Link>
-            <Link class="icon" onClick={expandNavbar}>
-              <i class="fa fa-bars"></i>
-            </Link>
+            <div className="nav-btn">
+              <label for="nav-check">
+                <span></span>
+                <span></span>
+                <span></span>
+              </label>
+            </div>
+
+            <div className="nav-links">
+              <Link to="/cart">Cart</Link>
+              {userInfo ? (
+                <span>
+                  <Link to="/">{userInfo.name}</Link>
+                  <Link to="/userProfile">User Profile</Link>
+                  <Link to="/orderHistory">Order History</Link>
+                  <Link to="/" onClick={onSignOutHandler}>
+                    Sign Out
+                  </Link>
+                  <div class="dropdown">
+                    <button class="dropbtn">Dropdown</button>
+                    <div class="dropdown-content">
+                      <a href="#">Link 1</a>
+                      <a href="#">Link 2</a>
+                      <a href="#">Link 3</a>
+                    </div>
+                  </div>
+                </span>
+              ) : (
+                <Link to="/signIn">Sign In</Link>
+              )}
+            </div>
           </div>
+
           {/*<ul className="nav">
             <li className="nav__item">
               <Link to="/" className="header__brandName">
