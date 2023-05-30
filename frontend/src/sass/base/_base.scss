@@ -4,6 +4,13 @@ $bp-large: 62.5em; // 1000px
 $bp-medium: 50em; // 800px
 $bp-small: 37.5em; // 600px
 
+html {
+  font-size: 100%;
+  @media only screen and (max-width: $bp-medium) {
+    font-size: 62.5%;
+  }
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -27,4 +34,7 @@ code {
     )
     [center-end] minmax(3rem, 1fr)
     [full-end];
+  @media only screen and (max-width: $bp-medium) {
+    grid-template-rows: 3rem minmax(88vh, max-content);
+  }
 }
