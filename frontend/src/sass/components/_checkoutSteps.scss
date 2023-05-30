@@ -1,7 +1,9 @@
 .checkout-steps {
   display: grid;
   grid-template-columns: repeat(4, minmax(min-content, 1fr));
-
+  @media only screen and (max-width: $bp-medium) {
+    margin-top: 1rem;
+  }
   & > * {
     padding-bottom: 0.2rem;
     border-bottom: 0.2rem solid #a0a0a0;

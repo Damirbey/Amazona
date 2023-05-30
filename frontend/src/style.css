@@ -291,6 +291,11 @@ main {
   padding: 1rem;
   grid-row: 2/3;
   grid-column: center-start/center-end; }
+  @media only screen and (max-width: 50em) {
+    main {
+      grid-column: full-start / full-end;
+      margin-top: 1rem;
+      padding: 0.7rem; } }
 
 .products {
   display: grid;
@@ -540,6 +545,9 @@ main {
 .checkout-steps {
   display: grid;
   grid-template-columns: repeat(4, minmax(min-content, 1fr)); }
+  @media only screen and (max-width: 50em) {
+    .checkout-steps {
+      margin-top: 1rem; } }
   .checkout-steps > * {
     padding-bottom: 0.2rem;
     border-bottom: 0.2rem solid #a0a0a0;
