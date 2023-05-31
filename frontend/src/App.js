@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 import { Store } from './Store';
-import { React, useContext, useState } from 'react';
+import { React, useContext, useEffect, useState } from 'react';
 import CartScreen from './screens/CartScreen';
 import SignInScreen from './screens/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen';
@@ -14,6 +14,8 @@ import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import UserProfileScreen from './screens/UserProfileScreen';
+import { getError } from './utils';
+import axios from 'axios';
 
 function App() {
   //EXTRACTING GLOBAL STATES FROM THE CONTEXT STORE
@@ -53,6 +55,17 @@ function App() {
   //DECLARING LOCAL STATES
   const [categories, setCategories] = useState([]);
   //FETCHING ALL CATEGORIES FROM THE BACKEND
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const { data } = await axios.get('/api/products/categories');
+        setCategories(data);
+      } catch (err) {
+        toast.error(getError(err));
+      }
+    };
+    fetchCategories();
+  }, []);
 
   return (
     <BrowserRouter>
@@ -130,9 +143,9 @@ function App() {
             <h2 style={{ color: '#fff', paddingLeft: 15, marginTop: -5 }}>
               Categories
             </h2>
-            <Link>About</Link>
-            <Link>About</Link>
-            <Link>About</Link>
+            {categories.map((category) => {
+              return <Link>{category}</Link>;
+            })}
           </div>
         </header>
 
