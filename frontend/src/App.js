@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 import { Store } from './Store';
-import { React, useContext } from 'react';
+import { React, useContext, useState } from 'react';
 import CartScreen from './screens/CartScreen';
 import SignInScreen from './screens/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen';
@@ -36,6 +36,24 @@ function App() {
       x.className = 'topnav';
     }
   };
+  //OPENING SIDENAV
+  const openNav = () => {
+    document.getElementById('mySidenav').style.width = '12rem';
+    document.getElementsByTagName('main')[0].style.marginLeft = '12rem';
+    document.getElementsByTagName('header')[0].style.marginLeft = '12rem';
+    document.getElementsByTagName('footer')[0].style.marginLeft = '12rem';
+  };
+  //CLOSING SIDENAV
+  const closeNav = () => {
+    document.getElementById('mySidenav').style.width = '0';
+    document.getElementsByTagName('main')[0].style.marginLeft = '0';
+    document.getElementsByTagName('header')[0].style.marginLeft = '0';
+    document.getElementsByTagName('footer')[0].style.marginLeft = '0';
+  };
+  //DECLARING LOCAL STATES
+  const [categories, setCategories] = useState([]);
+  //FETCHING ALL CATEGORIES FROM THE BACKEND
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -57,6 +75,12 @@ function App() {
           <div className="nav">
             <input type="checkbox" id="nav-check" />
             <div className="nav-header">
+              <span
+                style={{ fontSize: 30, cursor: 'pointer', color: '#fff' }}
+                onClick={openNav}
+              >
+                &#9776;
+              </span>
               <Link className="nav-title" to="/">
                 Amazona
               </Link>
@@ -95,64 +119,24 @@ function App() {
               )}
             </div>
           </div>
-
-          {/*<ul className="nav">
-            <li className="nav__item">
-              <Link to="/" className="header__brandName">
-                amazona
-              </Link>
-            </li>
-            <div className="nav__left-section">
-              <li className="nav__item">
-                <Link to="/cart" className="nav__link">
-                  Cart
-                  <span className="cart__quantity">
-                    {cart.cartItems.length}
-                  </span>
-                </Link>
-              </li>
-              <li className="nav__item">
-                <div class="dropdown">
-                  Dropdown
-                  <div class="dropdown-content">
-                    <a href="#">Link 1</a>
-                    <a href="#">Link 2</a>
-                    <a href="#">Link 3</a>
-                  </div>
-                </div>
-              </li>
-              <li className="nav__item">
-                {userInfo ? (
-                  <div className="userProfile ">
-                    <Link to="/" className="nav__link">
-                      {userInfo.name}
-                    </Link>
-                    <div className="userProfile__links">
-                      <Link to="/userProfile" className="nav__link">
-                        User Profile
-                      </Link>
-                      <Link to="/orderHistory" className="nav__link">
-                        Order History
-                      </Link>
-                      <Link
-                        to="/"
-                        className="nav__link"
-                        onClick={onSignOutHandler}
-                      >
-                        Sign Out
-                      </Link>
-                    </div>
-                  </div>
-                ) : (
-                  <Link to="/signIn" className="nav__link">
-                    Sign In
-                  </Link>
-                )}
-              </li>
-            </div>
-                </ul>*/}
+          <div id="mySidenav" class="sidenav">
+            <Link
+              className="closebtn"
+              style={{ cursor: 'pointer' }}
+              onClick={closeNav}
+            >
+              &times;
+            </Link>
+            <h2 style={{ color: '#fff', paddingLeft: 15, marginTop: -5 }}>
+              Categories
+            </h2>
+            <Link>About</Link>
+            <Link>About</Link>
+            <Link>About</Link>
+          </div>
         </header>
-        <main>
+
+        <main className="main">
           <Routes>
             <Route path="/" element={<HomeScreen />} />
             <Route path="/product/:slug" element={<ProductScreen />} />
