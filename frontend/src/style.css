@@ -528,7 +528,7 @@ main {
   display: grid;
   grid-template-columns: minmax(3rem, max-content) minmax(45rem, max-content) minmax(3rem, max-content);
   grid-gap: 1rem; }
-  @media only screen and (max-width: 62.5em) {
+  @media only screen and (max-width: 75em) {
     .searchScreen {
       grid-template-columns: 1fr; } }
   .searchScreen__filters {
@@ -550,8 +550,9 @@ main {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(20rem, max-content));
     grid-gap: 1rem; }
-  .searchScreen__sort {
-    background-color: bisque; }
+  @media only screen and (max-width: 75em) {
+    .searchScreen__sort {
+      grid-row: 2/3; } }
 
 /****Styling Pagination Button*****/
 .paginationBttns {

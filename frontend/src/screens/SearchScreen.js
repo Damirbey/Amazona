@@ -52,8 +52,6 @@ const reducer = (state, action) => {
         ...state,
         loading: false,
         products: action.payload.products,
-        page: action.payload.page,
-        pages: action.payload.pages,
         countProducts: action.payload.countProducts,
       };
     case 'FETCH_FAIL':
@@ -73,21 +71,23 @@ function SearchScreen() {
   const price = sp.get('price') || 'all';
   const rating = sp.get('rating') || 'all';
   const order = sp.get('order') || 'newest';
-  const page = sp.get('page') || 1;
+  //const page = sp.get('page') || 1;
   //DECLARING STATES FOR THE PAGE
-  const [{ loading, products, countProducts, pages, error }, dispatch] =
-    useReducer(reducer, {
+  const [{ loading, products, countProducts, error }, dispatch] = useReducer(
+    reducer,
+    {
       loading: true,
       error: '',
       products: [],
-    });
+    }
+  );
 
   useEffect(() => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
       try {
         const { data } = await axios.get(
-          `/api/products/search?query=${query}&category=${category}&price=${price}&rating=${rating}&order=${order}&page=${page}`
+          `/api/products/search?query=${query}&category=${category}&price=${price}&rating=${rating}&order=${order}`
         );
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {
@@ -95,7 +95,7 @@ function SearchScreen() {
       }
     };
     fetchData();
-  }, [query, category, price, rating, order, page, error]);
+  }, [query, category, price, rating, order, error]);
 
   //FETCHING ALL CATEGORIES FROM THE BACKEND
   const [categories, setCategories] = useState([]);
@@ -117,8 +117,7 @@ function SearchScreen() {
     const filterRating = filter.rating || rating;
     const filterQuery = filter.query || query;
     const filterOrder = filter.order || order;
-    const filterPage = filter.page || page;
-    return `/search?query=${filterQuery}&category=${filterCategory}&order=${filterOrder}&page=${filterPage}&price=${filterPrice}&rating=${filterRating}`;
+    return `/search?query=${filterQuery}&category=${filterCategory}&order=${filterOrder}&price=${filterPrice}&rating=${filterRating}`;
   };
   console.log(products);
   //IMPLEMENTING PAGINATION
@@ -218,7 +217,18 @@ function SearchScreen() {
       </div>
 
       <div className="searchScreen__sort">
-        <h3>Sort</h3>
+        <span className="text-bold">Sort by </span>
+        <select
+          value={order}
+          onChange={(e) => {
+            navigate(getFilterUrl({ order: e.target.value }));
+          }}
+        >
+          <option value="newest">Newest Arrivals</option>
+          <option value="lowest">Price: Low to High</option>
+          <option value="highest">Price: High to Low</option>
+          <option value="toprated">Avg. Customer Reviews</option>
+        </select>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@
       max-content
     );
   grid-gap: 1rem;
-  @media only screen and (max-width: $bp-large) {
+  @media only screen and (max-width: $bp-largest) {
     grid-template-columns: 1fr;
   }
   &__filters {
@@ -37,7 +37,9 @@
     }
   }
   &__sort {
-    background-color: bisque;
+    @media only screen and (max-width: $bp-largest) {
+      grid-row: 2/3;
+    }
   }
 }
 /****Styling Pagination Button*****/

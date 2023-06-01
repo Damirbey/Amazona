@@ -11,13 +11,10 @@ productRouter.get('/', async (req, res) => {
 });
 
 //FILTERING PRODUCTS BASED ON THE USER SELECTION
-const PAGE_SIZE = 3;
 productRouter.get(
   '/search',
   expressAsyncHandler(async (req, res) => {
     const { query } = req;
-    const pageSize = query.pageSize || PAGE_SIZE;
-    const page = query.page || 1;
     const category = query.category || '';
     const price = query.price || '';
     const rating = query.rating || '';
@@ -81,8 +78,6 @@ productRouter.get(
     res.send({
       products,
       countProducts,
-      page,
-      pages: Math.ceil(countProducts / pageSize),
     });
   })
 );
