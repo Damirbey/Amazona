@@ -126,12 +126,15 @@
 
   background-color: #404040;
   position: relative;
+  display: flex;
+  justify-content: space-between;
 }
 
 .nav > .nav-header {
   position: absolute;
   left: 10rem;
   display: inline;
+  align-self: center;
 }
 
 .nav > .nav-header > .nav-title {
@@ -140,6 +143,9 @@
   color: #fff;
   padding: 1rem;
   text-decoration: none;
+  @media only screen and (max-width: 860px) {
+    padding: 0rem;
+  }
 }
 
 .nav > .nav-btn {
@@ -148,7 +154,7 @@
 
 .nav > .nav-links {
   display: inline;
-  float: right;
+  //float: right;
   position: relative;
   right: 10rem;
   font-size: 18px;
@@ -174,7 +180,7 @@
   display: none;
 }
 
-@media (max-width: 700px) {
+@media only screen and (max-width: 860px) {
   .nav > .nav-header {
     left: 0rem;
     top: 0.5rem;
@@ -327,5 +333,42 @@ main {
   .sidenav a,
   .sidenav span {
     font-size: 18px;
+  }
+}
+//STYLING SEARCHBOX
+
+.searchBox {
+  position: relative;
+  align-self: center;
+  display: inline-block;
+  left: 20rem;
+  @media only screen and (max-width: 860px) {
+    left: 20rem;
+    top: 0.7rem;
+  }
+  @media only screen and (max-width: 800px) {
+    top: 1.5rem;
+  }
+  @media only screen and (max-width: 500px) {
+    left: 15rem;
+  }
+  @media only screen and (max-width: 400px) {
+    left: 12rem;
+  }
+  &__input {
+    padding: 0.7rem 2.5rem;
+    border: none;
+    outline: none;
+    border-radius: 1rem;
+    @media only screen and (max-width: 400px) {
+      padding: 0.7rem 1rem;
+    }
+  }
+  &__btn {
+    background-color: $color-primary-gold;
+    padding: 0.7rem;
+    border-radius: 1rem;
+    border: none;
+    margin-left: -2rem;
   }
 }

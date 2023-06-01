@@ -14,8 +14,10 @@ import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import UserProfileScreen from './screens/UserProfileScreen';
+import SearchScreen from './screens/SearchScreen';
 import { getError } from './utils';
 import axios from 'axios';
+import SearchBox from './components/SearchBox';
 
 function App() {
   //EXTRACTING GLOBAL STATES FROM THE CONTEXT STORE
@@ -29,15 +31,7 @@ function App() {
     localStorage.removeItem('paymentMethod');
     window.location.href = '/signin';
   };
-  // FUNCTION USED TO EXPAND THE NAVBAR
-  const expandNavbar = () => {
-    var x = document.getElementById('myTopnav');
-    if (x.className === 'topnav') {
-      x.className += ' responsive';
-    } else {
-      x.className = 'topnav';
-    }
-  };
+
   //OPENING SIDENAV
   const openNav = () => {
     document.getElementById('mySidenav').style.width = '12rem';
@@ -85,7 +79,7 @@ function App() {
           />
           <div className="sidebar"></div>
           {/**NAVIGATION */}
-          <div className="nav">
+          <nav className="nav">
             <input type="checkbox" id="nav-check" />
             <div className="nav-header">
               <span
@@ -98,6 +92,8 @@ function App() {
                 Amazona
               </Link>
             </div>
+
+            <SearchBox />
 
             <div className="nav-btn">
               <label for="nav-check">
@@ -131,7 +127,7 @@ function App() {
                 <Link to="/signIn">Sign In</Link>
               )}
             </div>
-          </div>
+          </nav>
           <div id="mySidenav" class="sidenav">
             <Link
               className="closebtn"
@@ -144,7 +140,7 @@ function App() {
               Categories
             </h2>
             {categories.map((category) => {
-              return <Link>{category}</Link>;
+              return <Link to={`search?category=${category}`}>{category}</Link>;
             })}
           </div>
         </header>
@@ -162,6 +158,7 @@ function App() {
             <Route path="/order/:id" element={<OrderScreen />} />
             <Route path="/orderHistory" element={<OrderHistoryScreen />} />
             <Route path="/userProfile" element={<UserProfileScreen />} />
+            <Route path="/search" element={<SearchScreen />} />
           </Routes>
         </main>
         <footer className="footer">
