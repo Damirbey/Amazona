@@ -1,0 +1,37 @@
+.searchScreen {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: minmax(3rem, max-content) 35rem minmax(
+      3rem,
+      max-content
+    );
+  grid-gap: 1rem;
+  @media only screen and (max-width: $bp-large) {
+    grid-template-columns: 1fr;
+  }
+  &__filters {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @media only screen and (max-width: $bp-large) {
+      flex-direction: row;
+      &__categories > h2 {
+        text-align: center;
+      }
+    }
+    &__categories > ul > li {
+      padding: 0.2rem;
+    }
+    &__categories > ul > li > a:link,
+    &__categories > ul > li > a:visited {
+      color: blue;
+    }
+  }
+  &__results {
+    background-color: aqua;
+  }
+  &__sort {
+    background-color: bisque;
+  }
+}

@@ -27,16 +27,10 @@
     color: $color-primary-gold;
   }
   &__reviews {
-    margin-left: 0.8rem;
+    margin-left: 0.3rem;
   }
 
   &:hover {
     transform: scale(1.05);
-  }
-}
-.fas,
-.far {
-  &:not(:first-child) {
-    margin-left: 0.5rem;
   }
 }

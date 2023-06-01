@@ -1,5 +1,5 @@
 function ProductRating(props) {
-  const { rating, numReviews } = props;
+  const { rating, numReviews, caption } = props;
   return (
     <p className="product__rating">
       <i
@@ -47,7 +47,9 @@ function ProductRating(props) {
             : 'far fa-star'
         }
       ></i>
-      <span className="product__reviews">{numReviews} reviews</span>
+      <span className="product__reviews">
+        {caption ? caption : <span>{numReviews} reviews</span>}
+      </span>
     </p>
   );
 }
