@@ -21,6 +21,9 @@ code {
     .App {
       grid-template-rows: 3rem minmax(88vh, max-content); } }
 
+.text-bold {
+  font-weight: bold; }
+
 .heading-1 {
   font-size: 1.5rem;
   margin: 2rem 0; }
@@ -537,7 +540,7 @@ main {
         flex-direction: row; }
         .searchScreen__filters__categories > h2 {
           text-align: center; } }
-    .searchScreen__filters__categories > ul > li {
+    .searchScreen__filters__categories > ul > .links {
       padding: 0.2rem; }
     .searchScreen__filters__categories > ul > li > a:link,
     .searchScreen__filters__categories > ul > li > a:visited {
