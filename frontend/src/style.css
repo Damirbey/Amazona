@@ -526,12 +526,13 @@ main {
 .searchScreen {
   margin-top: 1rem;
   display: grid;
-  grid-template-columns: minmax(3rem, max-content) 35rem minmax(3rem, max-content);
+  grid-template-columns: minmax(3rem, max-content) minmax(45rem, max-content) minmax(3rem, max-content);
   grid-gap: 1rem; }
   @media only screen and (max-width: 62.5em) {
     .searchScreen {
       grid-template-columns: 1fr; } }
   .searchScreen__filters {
+    max-height: 40rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between; }
@@ -545,10 +546,37 @@ main {
     .searchScreen__filters__categories > ul > li > a:link,
     .searchScreen__filters__categories > ul > li > a:visited {
       color: blue; }
-  .searchScreen__results {
-    background-color: aqua; }
+  .searchScreen__results .product_results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, max-content));
+    grid-gap: 1rem; }
   .searchScreen__sort {
     background-color: bisque; }
+
+/****Styling Pagination Button*****/
+.paginationBttns {
+  margin: 2.5rem;
+  width: 100px;
+  height: 40px;
+  list-style: none;
+  display: flex;
+  justify-content: center; }
+
+.paginationBttns a {
+  padding: 10px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid #000;
+  color: #000000 !important;
+  cursor: pointer; }
+
+.paginationBttns a:hover {
+  color: #ffffff !important;
+  background-color: #f5c518; }
+
+.paginationActive a {
+  color: #ffffff !important;
+  background-color: #f5c518; }
 
 .product {
   border: 1px solid #ccc;

@@ -1,9 +1,11 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ProductRating from '../components/ProductRating';
+import ProductCard from '../components/ProductCard';
 import { toast } from 'react-toastify';
 import { getError } from '../utils';
 import axios from 'axios';
+import ReactPaginate from 'react-paginate';
 
 const prices = [
   {
@@ -73,13 +75,28 @@ function SearchScreen() {
   const order = sp.get('order') || 'newest';
   const page = sp.get('page') || 1;
   //DECLARING STATES FOR THE PAGE
-  const [{ loading, products, countProducts, pages }, dispatch] = useReducer(
-    reducer,
-    {
-      loading: 'true',
+  const [{ loading, products, countProducts, pages, error }, dispatch] =
+    useReducer(reducer, {
+      loading: true,
       error: '',
-    }
-  );
+      products: [],
+    });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch({ type: 'FETCH_REQUEST' });
+      try {
+        const { data } = await axios.get(
+          `/api/products/search?query=${query}&category=${category}&price=${price}&rating=${rating}&order=${order}&page=${page}`
+        );
+        dispatch({ type: 'FETCH_SUCCESS', payload: data });
+      } catch (err) {
+        dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
+      }
+    };
+    fetchData();
+  }, [query, category, price, rating, order, page, error]);
+
   //FETCHING ALL CATEGORIES FROM THE BACKEND
   const [categories, setCategories] = useState([]);
   useEffect(() => {
@@ -92,7 +109,7 @@ function SearchScreen() {
       }
     };
     fetchCategories();
-  }, [categories]);
+  }, [dispatch]);
   //FILTERING PRODUCTS BASED ON THE SELECTED USER OPTION
   const getFilterUrl = (filter) => {
     const filterCategory = filter.category || category;
@@ -103,7 +120,19 @@ function SearchScreen() {
     const filterPage = filter.page || page;
     return `/search?query=${filterQuery}&category=${filterCategory}&order=${filterOrder}&page=${filterPage}&price=${filterPrice}&rating=${filterRating}`;
   };
-
+  console.log(products);
+  //IMPLEMENTING PAGINATION
+  const [pageNumber, setPageNumber] = useState(0);
+  const productsPerPage = 2;
+  const pagesVisited = pageNumber * productsPerPage;
+  const displayProducts = products.slice(
+    pagesVisited,
+    productsPerPage + pagesVisited
+  );
+  const pageCount = Math.ceil(products.length / productsPerPage);
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
+  };
   return (
     <div className="searchScreen">
       <div className="searchScreen__filters">
@@ -165,8 +194,29 @@ function SearchScreen() {
         </div>
       </div>
       <div className="searchScreen__results">
-        <h3>Results</h3>
+        <h3 style={{ display: 'block' }}>Results</h3>
+        <div className="product_results">
+          {products.length == 0 ? (
+            <div className="alertMessage">No Product is Found</div>
+          ) : (
+            displayProducts.map((product) => {
+              return <ProductCard key={product.slug} product={product} />;
+            })
+          )}
+        </div>
+        <ReactPaginate
+          previousLabel={'Previous'}
+          nextLabel={'Next'}
+          pageCount={pageCount}
+          onPageChange={changePage}
+          containerClassName={'paginationBttns'}
+          previousLinkClassName={'previousBttn'}
+          nextLinkClassName={'nextBttn'}
+          disabledClassName={'paginationDisabled'}
+          activeClassName={'paginationActive'}
+        />
       </div>
+
       <div className="searchScreen__sort">
         <h3>Sort</h3>
       </div>
