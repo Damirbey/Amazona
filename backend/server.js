@@ -8,7 +8,13 @@ import usersRouter from './routes/usersRouter.js';
 import orderRouter from './routes/orderRouter.js';
 //LOADING .env file variables
 dotenv.config();
-
+const cors = require('cors');
+const corsOptions ={
+    origin:'https://damiramazona.netlify.app/', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200
+}
+app.use(cors(corsOptions));
 //CONNECTING TO MONGO Database
 mongoose
   .connect(process.env.MONGO_URI)
