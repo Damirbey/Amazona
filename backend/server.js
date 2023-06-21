@@ -8,7 +8,7 @@ import usersRouter from './routes/usersRouter.js';
 import orderRouter from './routes/orderRouter.js';
 //LOADING .env file variables
 dotenv.config();
-const cors = require('cors');
+import cors from 'cors';
 const corsOptions ={
     origin:'https://damiramazona.netlify.app/', 
     credentials:true,            //access-control-allow-credentials:true
