@@ -14,7 +14,7 @@ const corsOptions ={
     credentials:true,            //access-control-allow-credentials:true
     optionSuccessStatus:200
 }
-app.use(cors(corsOptions));
+
 //CONNECTING TO MONGO Database
 mongoose
   .connect(process.env.MONGO_URI)
@@ -26,10 +26,11 @@ mongoose
   });
 
 const app = express();
+
 const port = process.env.PORT || 5000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(cors(corsOptions));
 //INSERTING ALL PRODUCTS
 app.use('/api/seed', seedRouter);
 //RETRIEVING PRODUCTS
