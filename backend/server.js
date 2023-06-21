@@ -2,18 +2,15 @@ import express from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import seedRouter from './routes/seedRouter.js';
 import productRouter from './routes/productRouter.js';
 import usersRouter from './routes/usersRouter.js';
 import orderRouter from './routes/orderRouter.js';
 //LOADING .env file variables
 dotenv.config();
-import cors from 'cors';
-const corsOptions ={
-    origin:'https://damiramazona.netlify.app/', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
-}
+
+
 
 //CONNECTING TO MONGO Database
 mongoose
@@ -30,7 +27,13 @@ const app = express();
 const port = process.env.PORT || 5000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors(corsOptions));
+app.use(cors({
+  'allowedHeaders': ['sessionId', 'Content-Type'],
+  'exposedHeaders': ['sessionId'],
+  'origin': '*',
+  'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  'preflightContinue': false
+}));
 //INSERTING ALL PRODUCTS
 app.use('/api/seed', seedRouter);
 //RETRIEVING PRODUCTS
