@@ -56,10 +56,10 @@ app.get('*', (req, res) => {
 
 //ERROR HANDLING API
 app.use((err, req, res, next) => {
-  /*res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
-    next();*/
+    next();
   res.status(500).send({ message: err.message });
 });
 
