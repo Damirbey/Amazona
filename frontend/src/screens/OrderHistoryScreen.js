@@ -36,7 +36,7 @@ function OrderHistoryScreen() {
     const fetchOrders = async () => {
       try {
         dispatch({ type: 'REQUEST_ORDER' });
-        const { data } = await axios.get(`/api/orders/mine`, {
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/orders/mine`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: 'REQUEST_SUCCESS', payload: data });

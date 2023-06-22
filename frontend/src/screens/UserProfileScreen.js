@@ -39,7 +39,7 @@ function UserProfileScreen() {
     try {
       dispatch({ type: 'REQUEST_UPDATE' });
       const { data } = await axios.put(
-        '/api/users/userProfile',
+        `${process.env.REACT_APP_API_URL}/api/users/userProfile`,
         { name, email, password },
         {
           headers: {

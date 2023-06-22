@@ -24,7 +24,7 @@ function SignInScreen() {
     try {
       console.log('Email is ', email);
       console.log('Password is ', password);
-      const { data } = await axios.post('/api/users/signIn', {
+      const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/api/users/signIn`, {
         email,
         password,
       });

@@ -67,7 +67,7 @@ function OrderScreen() {
       try {
         dispatch({ type: 'PAY_REQUEST' });
         const { data } = await axios.put(
-          `/api/orders/${order._id}/pay`,
+          `${process.env.REACT_APP_API_URL}/api/orders/${order._id}/pay`,
           details,
           {
             headers: { authorization: `Bearer ${userInfo.token}` },
@@ -96,7 +96,7 @@ function OrderScreen() {
         console.log('CALLING 1');
         dispatch({ type: 'FETCH_REQUEST' });
         console.log('CALLING 2');
-        const { data } = await axios.get(`/api/orders/${orderId}`, {
+        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/orders/${orderId}`, {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
         console.log('CALLING 3');
@@ -116,7 +116,7 @@ function OrderScreen() {
       }
     } else {
       const loadPaypalScript = async () => {
-        const { data: clientId } = await axios.get('/api/keys/paypal', {
+        const { data: clientId } = await axios.get(`${process.env.REACT_APP_API_URL}/api/keys/paypal`, {
           headers: { authorization: `Bearer ${userInfo.token}` },
         });
         paypalDispatch({

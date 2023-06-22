@@ -17,7 +17,7 @@ function CartScreen(props) {
   };
   /**REMOVING OR ADDING AN ITEM IN THE CART*/
   const updateCartHandler = async (product, quantity) => {
-    const { data } = await axios.get(`/api/products/${product._id}`);
+    const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/products/${product._id}`);
     if (data.countInStock < quantity) {
       window.alert('Sorry, product is out of stock');
       return;
