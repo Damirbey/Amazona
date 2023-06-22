@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({
   'allowedHeaders': ['sessionId', 'Content-Type'],
   'exposedHeaders': ['sessionId'],
-  'origin': '*',
+  'origin': 'https://damiramazona.netlify.app/',
   'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
   'preflightContinue': false
 }));
