@@ -19,6 +19,7 @@ import { getError } from './utils';
 import axios from 'axios';
 import SearchBox from './components/SearchBox';
 
+
 function App() {
   //EXTRACTING GLOBAL STATES FROM THE CONTEXT STORE
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -52,7 +53,7 @@ function App() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get('/api/products/categories');
+        const { data } = await axios.get(`${process.env.REACT_APP_API_KEY}/api/products/categories`);
         setCategories(data);
       } catch (err) {
         toast.error(getError(err));
