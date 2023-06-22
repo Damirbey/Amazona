@@ -30,7 +30,7 @@ function App() {
     localStorage.removeItem('userInfo');
     localStorage.removeItem('shippingAddress');
     localStorage.removeItem('paymentMethod');
-    window.location.href = '/';
+    window.location.href = '/signIn';
   };
 
   //OPENING SIDENAV
@@ -118,7 +118,7 @@ function App() {
                     <div class="dropdown-content">
                       <Link to="/userProfile">User Profile</Link>
                       <Link to="/orderHistory">Order History</Link>
-                      <Link to="/" onClick={onSignOutHandler}>
+                      <Link to="" onClick={onSignOutHandler}>
                         Sign Out
                       </Link>
                     </div>
