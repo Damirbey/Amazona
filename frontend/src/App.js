@@ -30,7 +30,7 @@ function App() {
     localStorage.removeItem('userInfo');
     localStorage.removeItem('shippingAddress');
     localStorage.removeItem('paymentMethod');
-    window.location.href = '/signIn';
+    window.location.href = '/signin';
   };
 
   //OPENING SIDENAV
