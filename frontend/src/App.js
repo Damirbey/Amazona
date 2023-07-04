@@ -15,10 +15,11 @@ import OrderScreen from './screens/OrderScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import UserProfileScreen from './screens/UserProfileScreen';
 import SearchScreen from './screens/SearchScreen';
+import AdminRoute from './components/AdminRoute';
+import ProtectedRoute from './components/ProtectedRoute';
 import { getError } from './utils';
 import axios from 'axios';
 import SearchBox from './components/SearchBox';
-
 
 function App() {
   //EXTRACTING GLOBAL STATES FROM THE CONTEXT STORE
@@ -53,7 +54,9 @@ function App() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/products/categories`);
+        const { data } = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/products/categories`
+        );
         setCategories(data);
       } catch (err) {
         toast.error(getError(err));
@@ -157,8 +160,22 @@ function App() {
             <Route path="/payment" element={<PaymentScreen />} />
             <Route path="/placeOrder" element={<PlaceOrderScreen />} />
             <Route path="/order/:id" element={<OrderScreen />} />
-            <Route path="/orderHistory" element={<OrderHistoryScreen />} />
-            <Route path="/userProfile" element={<UserProfileScreen />} />
+            <Route
+              path="/orderHistory"
+              element={
+                <ProtectedRoute>
+                  <OrderHistoryScreen />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/userProfile"
+              element={
+                <ProtectedRoute>
+                  <UserProfileScreen />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/search" element={<SearchScreen />} />
           </Routes>
         </main>
