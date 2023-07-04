@@ -20,6 +20,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import { getError } from './utils';
 import axios from 'axios';
 import SearchBox from './components/SearchBox';
+import AdminDashboardScreen from './screens/AdminDashboardScreen';
 
 function App() {
   //EXTRACTING GLOBAL STATES FROM THE CONTEXT STORE
@@ -130,6 +131,23 @@ function App() {
               ) : (
                 <Link to="/signIn">Sign In</Link>
               )}
+              {userInfo && userInfo.isAdmin ? (
+                <span>
+                  <div class="dropdown">
+                    <Link to="/">
+                      Admin <i class="fas fa-solid fa-caret-down"></i>
+                    </Link>
+                    <div class="dropdown-content">
+                      <Link to="/admin/dashboard">Dashboard</Link>
+                      <Link to="/admin/productsList">Products</Link>
+                      <Link to="/admin/ordersList">Orders</Link>
+                      <Link to="/admin/usersList">Users</Link>
+                    </div>
+                  </div>
+                </span>
+              ) : (
+                ''
+              )}
             </div>
           </nav>
           <div id="mySidenav" class="sidenav">
@@ -177,6 +195,14 @@ function App() {
               }
             />
             <Route path="/search" element={<SearchScreen />} />
+            <Route
+              path="/admin/dashboard"
+              element={
+                <AdminRoute>
+                  <AdminDashboardScreen />
+                </AdminRoute>
+              }
+            />
           </Routes>
         </main>
         <footer className="footer">
