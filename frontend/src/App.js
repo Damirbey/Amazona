@@ -115,11 +115,12 @@ function App() {
               </Link>
               {userInfo ? (
                 <span>
-                  <div class="dropdown">
+                  <div className="dropdown">
                     <Link to="/">
-                      {userInfo.name} <i class="fas fa-solid fa-caret-down"></i>
+                      {userInfo.name}{' '}
+                      <i className="fas fa-solid fa-caret-down"></i>
                     </Link>
-                    <div class="dropdown-content">
+                    <div className="dropdown-content">
                       <Link to="/userProfile">User Profile</Link>
                       <Link to="/orderHistory">Order History</Link>
                       <Link to="" onClick={onSignOutHandler}>
@@ -133,11 +134,11 @@ function App() {
               )}
               {userInfo && userInfo.isAdmin ? (
                 <span>
-                  <div class="dropdown">
+                  <div className="dropdown">
                     <Link to="/">
-                      Admin <i class="fas fa-solid fa-caret-down"></i>
+                      Admin <i className="fas fa-solid fa-caret-down"></i>
                     </Link>
-                    <div class="dropdown-content">
+                    <div className="dropdown-content">
                       <Link to="/admin/dashboard">Dashboard</Link>
                       <Link to="/admin/productsList">Products</Link>
                       <Link to="/admin/ordersList">Orders</Link>
@@ -150,7 +151,7 @@ function App() {
               )}
             </div>
           </nav>
-          <div id="mySidenav" class="sidenav">
+          <div id="mySidenav" className="sidenav">
             <Link
               className="closebtn"
               style={{ cursor: 'pointer' }}
@@ -161,8 +162,12 @@ function App() {
             <h2 style={{ color: '#fff', paddingLeft: 15, marginTop: -5 }}>
               Categories
             </h2>
-            {categories.map((category) => {
-              return <Link to={`search?category=${category}`}>{category}</Link>;
+            {categories.map((category, i) => {
+              return (
+                <Link key={i} to={`search?category=${category}`}>
+                  {category}
+                </Link>
+              );
             })}
           </div>
         </header>
