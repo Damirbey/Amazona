@@ -10,8 +10,6 @@ import orderRouter from './routes/orderRouter.js';
 //LOADING .env file variables
 dotenv.config();
 
-
-
 //CONNECTING TO MONGO Database
 mongoose
   .connect(process.env.MONGO_URI)
@@ -27,13 +25,16 @@ const app = express();
 const port = process.env.PORT || 5000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({
-  'allowedHeaders': ['sessionId', 'Content-Type'],
-  'exposedHeaders': ['sessionId'],
-  'origin': '*',
-  'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  'preflightContinue': false
-}));
+app.use(
+  cors({
+    allowedHeaders: ['sessionId', 'Content-Type'],
+    exposedHeaders: ['sessionId'],
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+  })
+);
+
 //INSERTING ALL PRODUCTS
 app.use('/api/seed', seedRouter);
 //RETRIEVING PRODUCTS
@@ -56,10 +57,14 @@ app.get('*', (req, res) => {
 
 //ERROR HANDLING API
 app.use((err, req, res, next) => {
-  /*res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
-    next();*/
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Api-Key, X-Requested-With, Content-Type, Accept, authorization'
+  );
+  next();
   res.status(500).send({ message: err.message });
 });
 
