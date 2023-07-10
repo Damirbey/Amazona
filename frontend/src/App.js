@@ -21,6 +21,7 @@ import { getError } from './utils';
 import axios from 'axios';
 import SearchBox from './components/SearchBox';
 import AdminDashboardScreen from './screens/AdminDashboardScreen';
+import AdminProductsScreen from './screens/AdminProductsScreen';
 
 function App() {
   //EXTRACTING GLOBAL STATES FROM THE CONTEXT STORE
@@ -205,6 +206,14 @@ function App() {
               element={
                 <AdminRoute>
                   <AdminDashboardScreen />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/productsList"
+              element={
+                <AdminRoute>
+                  <AdminProductsScreen />
                 </AdminRoute>
               }
             />

@@ -19,3 +19,11 @@
     }
   }
 }
+.product_list_header {
+  display: flex;
+  justify-content: space-between;
+  & > .btn {
+    height: 3rem;
+    align-self: center;
+  }
+}

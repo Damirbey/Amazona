@@ -36,9 +36,12 @@ function OrderHistoryScreen() {
     const fetchOrders = async () => {
       try {
         dispatch({ type: 'REQUEST_ORDER' });
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/orders/mine`, {
-          headers: { Authorization: `Bearer ${userInfo.token}` },
-        });
+        const { data } = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/orders/mine`,
+          {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+          }
+        );
         dispatch({ type: 'REQUEST_SUCCESS', payload: data });
       } catch (err) {
         dispatch({ type: 'REQUEST_FAIL', payload: err });
@@ -56,7 +59,7 @@ function OrderHistoryScreen() {
       {loading ? (
         <Spinner />
       ) : (
-        <table className="orderHistory_table">
+        <table className="table">
           <tr>
             <th>ID</th>
             <th>DATE</th>
