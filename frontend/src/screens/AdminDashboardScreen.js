@@ -1,5 +1,6 @@
 import { useContext, useEffect, useReducer } from 'react';
 import { Store } from '../Store';
+import Spinner from '../components/Spinner';
 import { getError } from '../utils';
 import axios from 'axios';
 //MANAGING LOCAL STATES
@@ -23,7 +24,6 @@ function AdminDashboardScreen() {
   //FETCHING DATA FROM THE BACKEND
   useEffect(() => {
     const fetchData = async () => {
-      console.log('FETCHING DATA');
       try {
         const { data } = await axios.get(
           `${process.env.REACT_APP_API_URL}/api/orders/summary`,
@@ -48,7 +48,39 @@ function AdminDashboardScreen() {
   });
 
   console.log('YES', summary);
-  return <h1>Dashboard</h1>;
+  return loading ? (
+    <Spinner />
+  ) : (
+    <div className="dashboard">
+      <h1>Dashboard</h1>
+      <div className="dashboard_stats">
+        <div className="dashboard_stats_statistic">
+          <p className="text-bold">
+            {summary.users && summary.users[0] ? summary.users[0].numUsers : 0}
+          </p>
+          <p>Users</p>
+        </div>
+        <div className="dashboard_stats_statistic">
+          <p className="text-bold">
+            {summary.orders && summary.orders[0]
+              ? summary.orders[0].numOrders
+              : 0}
+          </p>
+          <p>Orders</p>
+        </div>
+        <div className="dashboard_stats_statistic">
+          <p className="text-bold">
+            $
+            {summary.orders && summary.orders[0]
+              ? summary.orders[0].totalSales
+              : 0}
+          </p>
+          <p>Total Sales</p>
+        </div>
+      </div>
+      <div className="admin_dashboard_graphs"></div>
+    </div>
+  );
 }
 
 export default AdminDashboardScreen;
