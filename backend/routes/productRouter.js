@@ -1,6 +1,7 @@
 import express from 'express';
 import Product from '../models/productModel.js';
 import expressAsyncHandler from 'express-async-handler';
+import { isAdmin, isAuth } from '../utils.js';
 
 const productRouter = express.Router();
 
@@ -9,7 +10,27 @@ productRouter.get('/', async (req, res) => {
   const products = await Product.find();
   res.send(products);
 });
-
+productRouter.post(
+  '/',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const newProduct = new Product({
+      name: 'sample name ' + Date.now(),
+      slug: 'sample-name-' + Date.now(),
+      image: '/images/p1.jpeg',
+      price: 0,
+      category: 'sample category',
+      brand: 'sample brand',
+      countInStock: 0,
+      rating: 0,
+      numReviews: 0,
+      description: 'sample description',
+    });
+    const product = await newProduct.save();
+    res.send({ message: 'Product Created', product });
+  })
+);
 //FILTERING PRODUCTS BASED ON THE USER SELECTION
 productRouter.get(
   '/search',
