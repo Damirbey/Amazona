@@ -81,27 +81,36 @@ function AdminDashboardScreen() {
       </div>
       <div className="admin_dashboard_graphs">
         <h2>Sales</h2>
-        <Chart
-          width="100%"
-          height="400px"
-          chartType="AreaChart"
-          loader={<div>Loading Chart...</div>}
-          data={[
-            ['Date', 'Sales'],
-            ...summary.dailyOrders.map((x) => [x._id, x.sales]),
-          ]}
-        ></Chart>
+        {summary.dailyOrders.length === 0 ? (
+          <div className="alertMessage">No Sales</div>
+        ) : (
+          <Chart
+            width="100%"
+            height="400px"
+            chartType="AreaChart"
+            loader={<div>Loading Chart...</div>}
+            data={[
+              ['Date', 'Sales'],
+              ...summary.dailyOrders.map((x) => [x._id, x.sales]),
+            ]}
+          ></Chart>
+        )}
+
         <h2>Categories</h2>
-        <Chart
-          width="100%"
-          height="400px"
-          chartType="PieChart"
-          loader={<div>Loading Chart...</div>}
-          data={[
-            ['Category', 'Products'],
-            ...summary.productCategories.map((x) => [x._id, x.count]),
-          ]}
-        ></Chart>
+        {summary.productCategories.length === 0 ? (
+          <div className="alertMessage">No Categories</div>
+        ) : (
+          <Chart
+            width="100%"
+            height="400px"
+            chartType="PieChart"
+            loader={<div>Loading Chart...</div>}
+            data={[
+              ['Category', 'Products'],
+              ...summary.productCategories.map((x) => [x._id, x.count]),
+            ]}
+          ></Chart>
+        )}
       </div>
     </div>
   );
