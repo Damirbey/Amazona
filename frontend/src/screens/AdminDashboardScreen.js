@@ -1,6 +1,7 @@
 import { useContext, useEffect, useReducer } from 'react';
 import { Store } from '../Store';
 import Spinner from '../components/Spinner';
+import Chart from 'react-google-charts';
 import { getError } from '../utils';
 import axios from 'axios';
 //MANAGING LOCAL STATES
@@ -78,7 +79,30 @@ function AdminDashboardScreen() {
           <p>Total Sales</p>
         </div>
       </div>
-      <div className="admin_dashboard_graphs"></div>
+      <div className="admin_dashboard_graphs">
+        <h2>Sales</h2>
+        <Chart
+          width="100%"
+          height="400px"
+          chartType="AreaChart"
+          loader={<div>Loading Chart...</div>}
+          data={[
+            ['Date', 'Sales'],
+            ...summary.dailyOrders.map((x) => [x._id, x.sales]),
+          ]}
+        ></Chart>
+        <h2>Categories</h2>
+        <Chart
+          width="100%"
+          height="400px"
+          chartType="PieChart"
+          loader={<div>Loading Chart...</div>}
+          data={[
+            ['Category', 'Products'],
+            ...summary.productCategories.map((x) => [x._id, x.count]),
+          ]}
+        ></Chart>
+      </div>
     </div>
   );
 }
