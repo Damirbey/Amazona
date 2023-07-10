@@ -27,7 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    allowedHeaders: ['sessionId', 'Content-Type'],
+    allowedHeaders: ['sessionId', 'Content-Type','*'],
     exposedHeaders: ['sessionId'],
     origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -57,13 +57,6 @@ app.get('*', (req, res) => {
 
 //ERROR HANDLING API
 app.use((err, req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Api-Key, X-Requested-With, Content-Type, Accept, authorization'
-  );
   next();
   res.status(500).send({ message: err.message });
 });
