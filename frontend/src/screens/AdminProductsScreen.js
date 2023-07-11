@@ -59,7 +59,7 @@ function AdminProductsScreen() {
 
   //IMPLEMENTING PAGINATION
   const [pageNumber, setPageNumber] = useState(0);
-  const productsPerPage = 2;
+  const productsPerPage = 5;
   const pagesVisited = pageNumber * productsPerPage;
   const displayProducts = products.slice(
     pagesVisited,
@@ -112,6 +112,7 @@ function AdminProductsScreen() {
               <th>Price</th>
               <th>Category</th>
               <th>Brand</th>
+              <th>Action</th>
             </tr>
             {displayProducts.map((product, i) => (
               <tr key={i}>
@@ -120,6 +121,7 @@ function AdminProductsScreen() {
                 <td>{product.price}</td>
                 <td>{product.category}</td>
                 <td>{product.brand}</td>
+                <td><button className='btn_gray'>Edit</button></td>
               </tr>
             ))}
           </table>

@@ -630,6 +630,22 @@ main {
   font-size: 1.4rem;
   cursor: pointer; }
 
+.btn_gray {
+  background-color: #ccc;
+  border: 0.5px solid #2751f7;
+  padding: 0.5rem 2rem;
+  color: #000;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 20px;
+  box-shadow: 0.2rem 0.3rem 0.4rem #ccc; }
+  .btn_gray:hover {
+    background-color: #d4af37;
+    transform: translateY(-3px); }
+  .btn_gray:active {
+    transform: translateY(3px); }
+
 .spinner {
   animation: rotate 2s linear infinite;
   z-index: 2;
