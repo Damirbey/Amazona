@@ -632,17 +632,16 @@ main {
 
 .btn_gray {
   background-color: #ccc;
-  border: 0.5px solid #2751f7;
+  border: none;
   padding: 0.5rem 2rem;
   color: #000;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   cursor: pointer;
-  transition: all 0.2s;
-  border-radius: 20px;
-  box-shadow: 0.2rem 0.3rem 0.4rem #ccc; }
+  transition: all 0.2s; }
   .btn_gray:hover {
     background-color: #d4af37;
-    transform: translateY(-3px); }
+    transform: translateY(-3px);
+    color: #fff; }
   .btn_gray:active {
     transform: translateY(3px); }
 

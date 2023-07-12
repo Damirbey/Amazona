@@ -121,7 +121,7 @@ function AdminProductsScreen() {
                 <td>{product.price}</td>
                 <td>{product.category}</td>
                 <td>{product.brand}</td>
-                <td><button className='btn_gray'>Edit</button></td>
+                <td><button className='btn_gray' onClick={()=>navigate(`/admin/products/${product._id}`)}>Edit</button></td>
               </tr>
             ))}
           </table>
