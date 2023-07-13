@@ -33,12 +33,27 @@ productRouter.post(
   })
 );
 //UPDATING PRODUCT
-productRouter.post(
+productRouter.put(
   '/admin/updateProduct',
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
-    console.log('We are here');
+    const productId = req.body.id;
+    const foundProduct = await Product.findById(productId);
+    if (foundProduct) {
+      foundProduct.name = req.body.name;
+      foundProduct.slug = req.body.slug;
+      foundProduct.price = req.body.price;
+      foundProduct.category = req.body.category;
+      foundProduct.countInStock = req.body.countInStock;
+      foundProduct.description = req.body.description;
+      foundProduct.image = req.body.image;
+      foundProduct.brand = req.body.brand;
+      await foundProduct.save();
+      res.send({ message: 'Product Updated Successfully' });
+    } else {
+      res.status(404).send({ message: 'Something went wrong' });
+    }
   })
 );
 //FILTERING PRODUCTS BASED ON THE USER SELECTION
