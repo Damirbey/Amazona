@@ -10,6 +10,7 @@ productRouter.get('/', async (req, res) => {
   const products = await Product.find();
   res.send(products);
 });
+//CREATING A PRODUCT
 productRouter.post(
   '/',
   isAuth,
@@ -29,6 +30,15 @@ productRouter.post(
     });
     const product = await newProduct.save();
     res.send({ message: 'Product Created', product });
+  })
+);
+//UPDATING PRODUCT
+productRouter.post(
+  '/admin/updateProduct',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    console.log('We are here');
   })
 );
 //FILTERING PRODUCTS BASED ON THE USER SELECTION
