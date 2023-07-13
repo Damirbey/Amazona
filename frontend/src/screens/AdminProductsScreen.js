@@ -24,6 +24,18 @@ const reducer = (state, action) => {
       };
     case 'CREATE_FAIL':
       return { ...state, loadingCreate: false };
+    case 'DELETE_REQUEST':
+      return { ...state, loadingDelete: true, successDelete: false };
+    case 'DELETE_SUCCESS':
+      return {
+        ...state,
+        loadingDelete: false,
+        successDelete: true,
+      };
+    case 'DELETE_FAIL':
+      return { ...state, loadingDelete: false, successDelete: false };
+    case 'DELETE_RESET':
+      return { ...state, loadingDelete: false, successDelete: false };
     default:
       return state;
   }
@@ -35,11 +47,12 @@ function AdminProductsScreen() {
   const { state } = useContext(Store);
   const { userInfo } = state;
   //DECLARING LOCAL STATES
-  const [{ error, loading, products }, dispatch] = useReducer(reducer, {
-    loading: true,
-    products: [],
-    error: '',
-  });
+  const [{ error, loading, products, loadingDelete, successDelete }, dispatch] =
+    useReducer(reducer, {
+      loading: true,
+      products: [],
+      error: '',
+    });
 
   //FETCHING ALL PRODUCTS FROM THE BACKEND
   useEffect(() => {
@@ -54,8 +67,12 @@ function AdminProductsScreen() {
         dispatch({ type: 'FETCH_FAIL', payload: err });
       }
     };
-    fetchProducts();
-  }, []);
+    if (successDelete) {
+      dispatch({ type: 'DELETE_RESET' });
+    } else {
+      fetchProducts();
+    }
+  }, [successDelete]);
 
   //IMPLEMENTING PAGINATION
   const [pageNumber, setPageNumber] = useState(0);
@@ -84,10 +101,29 @@ function AdminProductsScreen() {
         );
         toast.success('product created successfully');
         dispatch({ type: 'CREATE_SUCCESS' });
-        navigate(`/admin/product/${data.product._id}`);
+        navigate(`/admin/productsList`);
       } catch (err) {
         toast.error(getError(err));
         dispatch({ type: 'CREATE_FAIL' });
+      }
+    }
+  };
+  //DELETING PRODUCT
+  const onDeleteProduct = async (productToDelete) => {
+    if (window.confirm('Are you sure to delete the current product?')) {
+      try {
+        dispatch({ type: 'DELETE_REQUEST' });
+        await axios.delete(
+          `/api/products/admin/deleteProduct/${productToDelete._id}`,
+          {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+          }
+        );
+        dispatch({ type: 'DELETE_SUCCESS' });
+        toast.success('Product deleted successfully');
+      } catch (err) {
+        toast.error(getError(err));
+        dispatch({ type: 'DELETE_FAIL' });
       }
     }
   };
@@ -99,7 +135,7 @@ function AdminProductsScreen() {
           Create New Product
         </button>
       </div>
-      {loading ? (
+      {loading || loadingDelete ? (
         <Spinner />
       ) : products.length === 0 ? (
         <div className="alertMessage">No Products Found</div>
@@ -121,7 +157,21 @@ function AdminProductsScreen() {
                 <td>{product.price}</td>
                 <td>{product.category}</td>
                 <td>{product.brand}</td>
-                <td><button className='btn_gray' onClick={()=>navigate(`/admin/products/${product._id}`)}>Edit</button></td>
+                <td>
+                  <button
+                    className="btn_gray"
+                    onClick={() => navigate(`/admin/products/${product._id}`)}
+                  >
+                    Edit
+                  </button>
+                  &nbsp;
+                  <button
+                    className="btn_gray"
+                    onClick={() => onDeleteProduct(product)}
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </table>
