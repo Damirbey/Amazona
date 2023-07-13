@@ -7,6 +7,7 @@ import seedRouter from './routes/seedRouter.js';
 import productRouter from './routes/productRouter.js';
 import usersRouter from './routes/usersRouter.js';
 import orderRouter from './routes/orderRouter.js';
+import uploadRouter from './routes/uploadRouter.js';
 //LOADING .env file variables
 dotenv.config();
 
@@ -27,7 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    allowedHeaders: ['sessionId', 'Content-Type','*'],
+    allowedHeaders: ['sessionId', 'Content-Type', '*'],
     exposedHeaders: ['sessionId'],
     origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -35,6 +36,8 @@ app.use(
   })
 );
 
+//UPLOADING IMAGES
+app.use('/api/upload', uploadRouter);
 //INSERTING ALL PRODUCTS
 app.use('/api/seed', seedRouter);
 //RETRIEVING PRODUCTS
