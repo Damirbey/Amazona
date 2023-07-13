@@ -30,7 +30,6 @@ orderRouter.get(
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
-    console.log('SUMMARY IS ');
     const orders = await Order.aggregate([
       {
         $group: {
@@ -74,7 +73,6 @@ orderRouter.get(
   isAuth,
   expressAsyncHandler(async (req, res) => {
     const orders = await Order.find({ user: req.user._id });
-    console.log('All orders', orders);
     if (orders) {
       res.send(orders);
     } else {
