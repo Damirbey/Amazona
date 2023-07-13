@@ -34,8 +34,9 @@ function AdminProductEditScreen() {
   const { state } = useContext(Store);
   const { userInfo } = state;
   //LOCAL STATES
-  const [{ loading, error }, dispatch] = useReducer(reducer, {
+  const [{ loading, error, loadingUpdate }, dispatch] = useReducer(reducer, {
     loading: true,
+    loadingUpdate: false,
     error: '',
   });
   const [name, setName] = useState('');
@@ -203,9 +204,13 @@ function AdminProductEditScreen() {
           required
           onChange={(e) => setDescription(e.target.value)}
         />
-        <button className="btn" type="submit">
-          Update
-        </button>
+        {loadingUpdate ? (
+          <Spinner />
+        ) : (
+          <button className="btn" type="submit">
+            Update
+          </button>
+        )}
       </form>
     </div>
   );
