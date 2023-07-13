@@ -5,7 +5,7 @@ import { Store } from '../Store';
 import Spinner from '../components/Spinner';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
+import { getError } from '../utils';
 //DECLARING REDUCER TO HANDLE COMPLEX LOCAL STATES
 const reducer = (state, action) => {
   switch (action.type) {
@@ -21,6 +21,12 @@ const reducer = (state, action) => {
       return { ...state, loadingUpdate: false };
     case 'UPDATE_FAIL':
       return { ...state, loadingUpdate: false };
+    case 'UPLOAD_REQUEST':
+      return { ...state, loadingUpload: true, errorUpload: '' };
+    case 'UPLOAD_SUCCESS':
+      return { ...state, loadingUpload: false, errorUpload: '' };
+    case 'UPLOAD_FAIL':
+      return { ...state, loadingUpload: false, errorUpload: action.payload };
     default:
       return state;
   }
@@ -34,11 +40,13 @@ function AdminProductEditScreen() {
   const { state } = useContext(Store);
   const { userInfo } = state;
   //LOCAL STATES
-  const [{ loading, error, loadingUpdate }, dispatch] = useReducer(reducer, {
-    loading: true,
-    loadingUpdate: false,
-    error: '',
-  });
+  const [{ loading, error, loadingUpdate, loadingUpload }, dispatch] =
+    useReducer(reducer, {
+      loading: true,
+      loadingUpdate: false,
+      loadingUpload: false,
+      error: '',
+    });
   const [name, setName] = useState('');
   const [slug, setSlug] = useState('');
   const [category, setCategory] = useState('');
@@ -99,6 +107,28 @@ function AdminProductEditScreen() {
       dispatch({ type: 'UPDATE_FAIL' });
     }
   };
+  //HANDLING FILE UPLOAD
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const bodyFormData = new FormData();
+    bodyFormData.append('file', file);
+    try {
+      dispatch({ type: 'UPLOAD_REQUEST' });
+      const { data } = await axios.post('/api/upload', bodyFormData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          authorization: `Bearer ${userInfo.token}`,
+        },
+      });
+      dispatch({ type: 'UPLOAD_SUCCESS' });
+
+      toast.success('Image uploaded successfully');
+      setImage(data.secure_url);
+    } catch (err) {
+      toast.error(getError(err));
+      dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
+    }
+  };
   return loading ? (
     <Spinner />
   ) : (
@@ -157,7 +187,7 @@ function AdminProductEditScreen() {
           onChange={(e) => setPrice(e.target.value)}
         />
         <label className="form__label" htmlFor="image">
-          Image File
+          Image Path
         </label>
         <input
           type="text"
@@ -168,6 +198,18 @@ function AdminProductEditScreen() {
           required
           onChange={(e) => setImage(e.target.value)}
         />
+        <label className="form__label" htmlFor="imageFile">
+          Image File
+        </label>
+        <input
+          type="file"
+          name="imageFile"
+          id="imageFile"
+          className="form__input"
+          required
+          onChange={uploadFileHandler}
+        />
+        {loadingUpload && <Spinner />}
         <label className="form__label" htmlFor="countInStock">
           Count In Stock
         </label>
