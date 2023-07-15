@@ -16,14 +16,17 @@ const reducer = (state, action) => {
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
     case 'CREATE_REQUEST':
-      return { ...state, loadingCreate: true };
+      return { ...state, loadingCreate: true, createSuccess: false };
     case 'CREATE_SUCCESS':
       return {
         ...state,
         loadingCreate: false,
+        createSuccess: true,
       };
     case 'CREATE_FAIL':
-      return { ...state, loadingCreate: false };
+      return { ...state, loadingCreate: false, createSuccess: false };
+    case 'CREATE_RESET':
+      return { ...state, loadingCreate: false, createSuccess: false };
     case 'DELETE_REQUEST':
       return { ...state, loadingDelete: true, successDelete: false };
     case 'DELETE_SUCCESS':
@@ -47,12 +50,15 @@ function AdminProductsScreen() {
   const { state } = useContext(Store);
   const { userInfo } = state;
   //DECLARING LOCAL STATES
-  const [{ error, loading, products, loadingDelete, successDelete }, dispatch] =
-    useReducer(reducer, {
-      loading: true,
-      products: [],
-      error: '',
-    });
+  const [
+    { loading, products, loadingDelete, successDelete, createSuccess },
+    dispatch,
+  ] = useReducer(reducer, {
+    loading: true,
+    products: [],
+    error: '',
+  });
+  const [pageNumber, setPageNumber] = useState(0);
 
   //FETCHING ALL PRODUCTS FROM THE BACKEND
   useEffect(() => {
@@ -67,15 +73,16 @@ function AdminProductsScreen() {
         dispatch({ type: 'FETCH_FAIL', payload: err });
       }
     };
-    if (successDelete) {
+    if (successDelete || createSuccess) {
       dispatch({ type: 'DELETE_RESET' });
+      dispatch({ type: 'CREATE_RESET' });
     } else {
       fetchProducts();
     }
-  }, [successDelete]);
+  }, [successDelete, createSuccess]);
 
   //IMPLEMENTING PAGINATION
-  const [pageNumber, setPageNumber] = useState(0);
+
   const productsPerPage = 5;
   const pagesVisited = pageNumber * productsPerPage;
   const displayProducts = products.slice(
@@ -86,13 +93,12 @@ function AdminProductsScreen() {
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
-
   //CREATING NEW PRODUCT
   const onCreateProductHandler = async () => {
     if (window.confirm('Do you want to create a new product?')) {
       try {
         dispatch({ type: 'CREATE_REQUEST' });
-        const { data } = await axios.post(
+        await axios.post(
           `${process.env.REACT_APP_API_URL}/api/products`,
           {},
           {
