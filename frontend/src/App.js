@@ -23,6 +23,7 @@ import SearchBox from './components/SearchBox';
 import AdminDashboardScreen from './screens/AdminDashboardScreen';
 import AdminProductsScreen from './screens/AdminProductsScreen';
 import AdminProductEditScreen from './screens/AdminProductEditScreen';
+import AdminOrdersListScreen from './screens/AdminOrdersListScreen';
 
 function App() {
   //EXTRACTING GLOBAL STATES FROM THE CONTEXT STORE
@@ -223,6 +224,14 @@ function App() {
               element={
                 <AdminRoute>
                   <AdminProductEditScreen />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/ordersList"
+              element={
+                <AdminRoute>
+                  <AdminOrdersListScreen />
                 </AdminRoute>
               }
             />

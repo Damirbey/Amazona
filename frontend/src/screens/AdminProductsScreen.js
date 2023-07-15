@@ -58,7 +58,7 @@ function AdminProductsScreen() {
     products: [],
     error: '',
   });
-  const [pageNumber, setPageNumber] = useState(0);
+  const [pageNumber, setPageNumber] = useState('');
 
   //FETCHING ALL PRODUCTS FROM THE BACKEND
   useEffect(() => {
