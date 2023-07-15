@@ -24,6 +24,14 @@ function reducer(state, action) {
       return { ...state, loadingPay: false };
     case 'PAY_RESET':
       return { ...state, loadingPay: false, successPay: false };
+    case 'DELIVER_REQUEST':
+      return { ...state, loadingDelivery: true };
+    case 'DELIVER_SUCCESS':
+      return { ...state, loadingDelivery: false, successDelivery: true };
+    case 'DELIVER_FAIL':
+      return { ...state, loadingDelivery: false };
+    case 'DELIVER_RESET':
+      return { ...state, loadingDelivery: false, successDelivery: false };
     default:
       return state;
   }
@@ -39,14 +47,24 @@ function OrderScreen() {
   const { id: orderId } = params;
 
   //MANAGING STATES BY THE REDUCER HOOKs
-  const [{ loading, error, order, successPay, loadingPay }, dispatch] =
-    useReducer(reducer, {
-      loading: true,
-      error: '',
-      order: {},
-      successPay: false,
-      loadingPay: false,
-    });
+  const [
+    {
+      loading,
+      error,
+      order,
+      successPay,
+      loadingPay,
+      successDelivery,
+      loadingDelivery,
+    },
+    dispatch,
+  ] = useReducer(reducer, {
+    loading: true,
+    error: '',
+    order: {},
+    successPay: false,
+    loadingPay: false,
+  });
   //PAYPAL FUNCTIONS
   const createOrder = (data, actions) => {
     return actions.order
@@ -96,9 +114,12 @@ function OrderScreen() {
         console.log('CALLING 1');
         dispatch({ type: 'FETCH_REQUEST' });
         console.log('CALLING 2');
-        const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/orders/${orderId}`, {
-          headers: { authorization: `Bearer ${userInfo.token}` },
-        });
+        const { data } = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/orders/${orderId}`,
+          {
+            headers: { authorization: `Bearer ${userInfo.token}` },
+          }
+        );
         console.log('CALLING 3');
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {
@@ -109,16 +130,27 @@ function OrderScreen() {
     if (!userInfo) {
       navigate('/signIn');
     }
-    if (!order._id || successPay || (order._id && order._id !== orderId)) {
+    if (
+      !order._id ||
+      successPay ||
+      successDelivery ||
+      (order._id && order._id !== orderId)
+    ) {
       fetchOrder();
       if (successPay) {
         dispatch({ type: 'PAY_RESET' });
       }
+      if (successDelivery) {
+        dispatch({ type: 'DELIVERY_RESET' });
+      }
     } else {
       const loadPaypalScript = async () => {
-        const { data: clientId } = await axios.get(`${process.env.REACT_APP_API_URL}/api/keys/paypal`, {
-          headers: { authorization: `Bearer ${userInfo.token}` },
-        });
+        const { data: clientId } = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/keys/paypal`,
+          {
+            headers: { authorization: `Bearer ${userInfo.token}` },
+          }
+        );
         paypalDispatch({
           type: 'resetOptions',
           value: {
@@ -132,6 +164,20 @@ function OrderScreen() {
     }
   }, [order, userInfo, orderId, navigate, paypalDispatch, successPay]);
 
+  //DELIVERING ORDER
+  const onDeliverHanlder = async (order) => {
+    try {
+      dispatch({ type: 'DELIVERY_REQUEST' });
+      await axios.put(`/api/orders/deliver/:${order._id}`, {
+        headers: { authorization: `Bearer ${userInfo.token}` },
+      });
+      dispatch({ type: 'DELIVERY_SUCCESS' });
+      toast.success('Order Delivered Successfully');
+    } catch (err) {
+      dispatch({ type: 'DELIVERY_FAIL' });
+      toast.error(getError(err));
+    }
+  };
   return (
     <div>
       <Helmet>
@@ -219,7 +265,7 @@ function OrderScreen() {
               </div>
             </div>
 
-            {!order.isPaid && (
+            {!order.isPaid && !userInfo.isAdmin && (
               <div>
                 <br />
                 {isPending ? (
@@ -235,6 +281,11 @@ function OrderScreen() {
                 )}
                 {loadingPay && <Spinner />}
               </div>
+            )}
+            {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+              <button className="btn" onClick={() => onDeliverHanlder(order)}>
+                Deliver Order
+              </button>
             )}
           </div>
         </div>

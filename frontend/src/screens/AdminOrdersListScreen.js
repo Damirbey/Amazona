@@ -85,7 +85,7 @@ function AdminOrdersListScreen() {
                   className="btn_gray"
                   onClick={() => navigate(`/order/${order._id}`)}
                 >
-                  Edit
+                  Details
                 </button>
                 &nbsp;
                 <button className="btn_gray">Delete</button>
