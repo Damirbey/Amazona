@@ -7,6 +7,19 @@ import expressAsyncHandler from 'express-async-handler';
 
 const orderRouter = express.Router();
 
+orderRouter.get(
+  '/admin/allOrders',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const orders = await Order.find().populate({
+      path: 'user',
+      select: 'name',
+    });
+    res.send(orders);
+  })
+);
+
 orderRouter.post(
   '/',
   isAuth,
