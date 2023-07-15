@@ -24,13 +24,13 @@ function reducer(state, action) {
       return { ...state, loadingPay: false };
     case 'PAY_RESET':
       return { ...state, loadingPay: false, successPay: false };
-    case 'DELIVER_REQUEST':
+    case 'DELIVERY_REQUEST':
       return { ...state, loadingDelivery: true };
-    case 'DELIVER_SUCCESS':
+    case 'DELIVERY_SUCCESS':
       return { ...state, loadingDelivery: false, successDelivery: true };
-    case 'DELIVER_FAIL':
+    case 'DELIVERY_FAIL':
       return { ...state, loadingDelivery: false };
-    case 'DELIVER_RESET':
+    case 'DELIVERY_RESET':
       return { ...state, loadingDelivery: false, successDelivery: false };
     default:
       return state;
@@ -162,15 +162,27 @@ function OrderScreen() {
       };
       loadPaypalScript();
     }
-  }, [order, userInfo, orderId, navigate, paypalDispatch, successPay]);
+  }, [
+    order,
+    userInfo,
+    orderId,
+    navigate,
+    paypalDispatch,
+    successPay,
+    successDelivery,
+  ]);
 
   //DELIVERING ORDER
-  const onDeliverHanlder = async (order) => {
+  const onDeliverHanlder = async () => {
     try {
       dispatch({ type: 'DELIVERY_REQUEST' });
-      await axios.put(`/api/orders/deliver/:${order._id}`, {
-        headers: { authorization: `Bearer ${userInfo.token}` },
-      });
+      await axios.put(
+        `${process.env.REACT_APP_API_URL}/api/orders/deliver/${order._id}`,
+        {},
+        {
+          headers: { authorization: `Bearer ${userInfo.token}` },
+        }
+      );
       dispatch({ type: 'DELIVERY_SUCCESS' });
       toast.success('Order Delivered Successfully');
     } catch (err) {
