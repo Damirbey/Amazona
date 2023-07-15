@@ -20,6 +20,21 @@ orderRouter.get(
   })
 );
 
+orderRouter.put(
+  '/deliver/:id',
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      order.isDelivered = true;
+      order.deliveredAt = Date.now();
+      await order.save();
+      res.send({ message: 'Order Delivered' });
+    } else {
+      res.status(404).send({ message: 'Order Not Found' });
+    }
+  })
+);
 orderRouter.post(
   '/',
   isAuth,
@@ -38,6 +53,7 @@ orderRouter.post(
     res.status(201).send({ message: 'Order Created Successful', order });
   })
 );
+
 orderRouter.get(
   '/summary',
   isAuth,
