@@ -251,6 +251,7 @@ function OrderScreen() {
                   </Link>
 
                   <p className="cartItem__price">${product.price}</p>
+                  <p className="cartItem__price">{product.quantity}</p>
                 </div>
               ))}
             </div>

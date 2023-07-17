@@ -15,6 +15,14 @@ const reducer = (state, action) => {
       return { ...state, loadingOrders: false, orders: action.payload };
     case 'FETCH_FAIL':
       return { ...state, loadingOrders: false };
+    case 'DELETE_REQUEST':
+      return { ...state, loadingDelete: true, successDelete: false };
+    case 'DELETE_SUCCESS':
+      return { ...state, loadingDelete: false, successDelete: true };
+    case 'DELETE_FAIL':
+      return { ...state, loadingDelete: false, successDelete: false };
+    case 'DELETE_RESET':
+      return { ...state, loadingDelete: false, successDelete: false };
     default:
       return state;
   }
@@ -26,10 +34,11 @@ function AdminOrdersListScreen() {
   const { state } = useContext(Store);
   const { userInfo } = state;
   //USING REDUCER TO MANAGE STATES
-  const [{ loadingOrders, orders }, dispatch] = useReducer(reducer, {
-    loadingOrders: true,
-    orders: [],
-  });
+  const [{ loadingOrders, orders, successDelete, loadingDelete }, dispatch] =
+    useReducer(reducer, {
+      loadingOrders: true,
+      orders: [],
+    });
   //FETCHING ORDERS FROM THE BACKEND
   useEffect(() => {
     const fetchOrders = async () => {
@@ -41,14 +50,37 @@ function AdminOrdersListScreen() {
             headers: { authorization: `Bearer ${userInfo.token}` },
           }
         );
-        console.log(data);
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
       } catch (err) {
         dispatch({ type: 'FETCH_FAIL' });
       }
     };
-    fetchOrders();
-  }, [userInfo]);
+    if (successDelete) {
+      dispatch({ type: 'DELETE_RESET' });
+    } else {
+      fetchOrders();
+    }
+  }, [userInfo, successDelete]);
+
+  //DELETING ORDERS FROM THE LIST
+  const onDeleteHandler = async (order) => {
+    if (window.confirm('Are you sure you want to delete order?')) {
+      try {
+        dispatch({ type: 'DELETE_REQUEST' });
+        await axios.delete(
+          `${process.env.REACT_APP_API_URL}/api/orders/${order._id}`,
+          {
+            headers: { authorization: `Bearer ${userInfo.token}` },
+          }
+        );
+        dispatch({ type: 'DELETE_SUCCESS' });
+        toast.success('Order deleted successfully!');
+      } catch (err) {
+        dispatch({ type: 'DELETE_FAIL' });
+      }
+    }
+  };
+
   return (
     <div>
       <Helmet>
@@ -59,23 +91,21 @@ function AdminOrdersListScreen() {
         <Spinner />
       ) : (
         <table className="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>User</th>
-              <th>Date</th>
-              <th>Total</th>
-              <th>Paid</th>
-              <th>Delivered</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+          <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Date</th>
+            <th>Total</th>
+            <th>Paid</th>
+            <th>Delivered</th>
+            <th>Actions</th>
+          </tr>
           {orders.map((order, i) => (
             <tr key={i}>
               <td>{order._id}</td>
               <td>{order.user ? order.user.name : 'DELETED USER'}</td>
               <td>{order.createdAt.substring(0, 10)}</td>
-              <td>{order.totalPrice.toFixed(2)}</td>
+              <td>${order.totalPrice.toFixed(2)}</td>
               <td>{order.isPaid ? order.paidAt.substring(0, 10) : 'No'}</td>
               <td>
                 {order.isDelivered ? order.deliveredAt.substring(0, 10) : 'No'}
@@ -88,7 +118,14 @@ function AdminOrdersListScreen() {
                   Details
                 </button>
                 &nbsp;
-                <button className="btn_gray">Delete</button>
+                {!loadingDelete && (
+                  <button
+                    className="btn_gray"
+                    onClick={() => onDeleteHandler(order)}
+                  >
+                    Delete
+                  </button>
+                )}
               </td>
             </tr>
           ))}
