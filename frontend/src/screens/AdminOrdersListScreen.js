@@ -73,8 +73,8 @@ function AdminOrdersListScreen() {
             headers: { authorization: `Bearer ${userInfo.token}` },
           }
         );
-        dispatch({ type: 'DELETE_SUCCESS' });
         toast.success('Order deleted successfully!');
+        dispatch({ type: 'DELETE_SUCCESS' });
       } catch (err) {
         dispatch({ type: 'DELETE_FAIL' });
       }
