@@ -15,6 +15,20 @@ usersRouter.get(
     res.send(users);
   })
 );
+//FETCHING SPECIFIC USER
+usersRouter.get(
+  '/:id',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const user = await Users.findById(req.params.id);
+    if (user) {
+      res.send(user);
+    } else {
+      res.status(404).send({ message: 'User not found' });
+    }
+  })
+);
 //SIGNING IN USER
 usersRouter.post(
   '/signIn',
@@ -54,6 +68,24 @@ usersRouter.post(
       isAdmin: user.isAdmin,
       token: generateToken(user),
     });
+  })
+);
+//UPDATING USER FROM THE ADMIN PANEL
+usersRouter.put(
+  '/updateUser/:id',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const user = await Users.findById(req.params.id);
+    if (user) {
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+      user.isAdmin = Boolean(req.body.isAdmin);
+      await user.save();
+      res.send('User updated successfully!');
+    } else {
+      res.status(404).send({ message: 'Can not update user at the moment!' });
+    }
   })
 );
 //UPDATING USER PROFILE
