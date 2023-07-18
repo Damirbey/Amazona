@@ -1,9 +1,20 @@
 import Users from '../models/usersModel.js';
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
-import { generateToken, isAuth } from '../utils.js';
+import { generateToken, isAuth, isAdmin } from '../utils.js';
 import bcrypt from 'bcryptjs';
 const usersRouter = express.Router();
+
+//DISPLAYING ALL USERS FOR THE ADMIN
+usersRouter.get(
+  '/',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const users = await Users.find();
+    res.send(users);
+  })
+);
 //SIGNING IN USER
 usersRouter.post(
   '/signIn',
@@ -67,6 +78,26 @@ usersRouter.put(
       });
     } else {
       res.status(404).send({ message: 'User not found' });
+    }
+  })
+);
+
+//DELETING SELECTED USER BY THE ADMIN
+usersRouter.delete(
+  '/:id',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const userToDelete = await Users.findById(req.params.id);
+    if (userToDelete) {
+      if (userToDelete.email != 'admin@example.com') {
+        await userToDelete.deleteOne();
+        res.send({ message: 'User Deleted Successfully!' });
+      } else {
+        res.status(404).send({ message: 'You can not delete admin user!' });
+      }
+    } else {
+      res.status(404).send({ message: 'User not found!' });
     }
   })
 );
