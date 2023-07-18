@@ -25,6 +25,7 @@ import AdminProductsScreen from './screens/AdminProductsScreen';
 import AdminProductEditScreen from './screens/AdminProductEditScreen';
 import AdminOrdersListScreen from './screens/AdminOrdersListScreen';
 import AdminUsersListScreen from './screens/AdminUsersListScreen';
+import AdminEditUserScreen from './screens/AdminEditUserScreen';
 
 function App() {
   //EXTRACTING GLOBAL STATES FROM THE CONTEXT STORE
@@ -241,6 +242,14 @@ function App() {
               element={
                 <AdminRoute>
                   <AdminUsersListScreen />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/user/:id"
+              element={
+                <AdminRoute>
+                  <AdminEditUserScreen />
                 </AdminRoute>
               }
             />
