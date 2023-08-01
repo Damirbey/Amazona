@@ -82,7 +82,7 @@ function AdminOrdersListScreen() {
   };
 
   return (
-    <div>
+    <div className='tableList'>
       <Helmet>
         <title>Orders List</title>
       </Helmet>

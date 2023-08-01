@@ -389,7 +389,7 @@ main {
   @media only screen and (max-width: 50em) {
     main {
       grid-column: full-start / full-end;
-      margin: 2rem; } }
+      margin: 2rem 0; } }
 
 .products {
   display: grid;
@@ -755,13 +755,12 @@ main {
   justify-content: space-between;
   border-bottom: 1px solid #ccc; }
 
+.tableList {
+  overflow-x: auto; }
+
 .table {
   width: 100%;
   border-collapse: collapse; }
-  @media only screen and (max-width: 50em) {
-    .table {
-      width: 100px;
-      margin: 10px auto; } }
   .table tr:not(:first-child) {
     padding-bottom: 3rem;
     border-bottom: 1px solid #ccc;

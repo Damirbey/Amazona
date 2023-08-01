@@ -134,7 +134,7 @@ function AdminProductsScreen() {
     }
   };
   return (
-    <div>
+    <div >
       <div className="product_list_header">
         <h1>Products List</h1>
         <button className="btn" onClick={onCreateProductHandler}>
