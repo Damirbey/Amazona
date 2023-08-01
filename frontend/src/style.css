@@ -758,6 +758,9 @@ main {
 .table {
   width: 100%;
   border-collapse: collapse; }
+  @media only screen and (max-width: 50em) {
+    .table {
+      width: 60%; } }
   .table tr:not(:first-child) {
     padding-bottom: 3rem;
     border-bottom: 1px solid #ccc;

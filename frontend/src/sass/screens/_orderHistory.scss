@@ -1,7 +1,9 @@
 .table {
   width:100%;
   border-collapse: collapse;
-
+  @media only screen and (max-width: $bp-medium) {
+    width:60%;
+  }
   tr:not(:first-child) {
     padding-bottom: 3rem;
     border-bottom: 1px solid #ccc;
