@@ -51,7 +51,7 @@ function OrderHistoryScreen() {
   }, [userInfo]);
   console.log(orders);
   return (
-    <div>
+    <div className='orderHistory'>
       <Helmet>
         <title>Order History</title>
       </Helmet>

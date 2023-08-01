@@ -760,7 +760,8 @@ main {
   border-collapse: collapse; }
   @media only screen and (max-width: 50em) {
     .table {
-      width: 60%; } }
+      width: 100px;
+      margin: 10px auto; } }
   .table tr:not(:first-child) {
     padding-bottom: 3rem;
     border-bottom: 1px solid #ccc;
