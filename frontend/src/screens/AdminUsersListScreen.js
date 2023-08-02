@@ -84,7 +84,7 @@ function AdminUsersListScreen() {
     }
   };
   return (
-    <div>
+    <div className='tableList'>
       <Helmet>
         <title>Users List</title>
       </Helmet>
