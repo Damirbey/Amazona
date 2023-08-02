@@ -219,7 +219,8 @@
     left: 0px;
   }
   .nav > .nav-links > a,
-  .nav > .nav-links > span > a {
+  .nav > .nav-links > span,
+  .nav > .nav-links > span >a {
     display: block;
     width: 100%;
   }
