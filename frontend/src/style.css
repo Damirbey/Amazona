@@ -155,7 +155,8 @@ code {
   background-color: #404040;
   position: relative;
   display: flex;
-  justify-content: space-between; }
+  justify-content: space-between;
+  z-index: 1; }
 
 .nav > .nav-header {
   position: absolute;
