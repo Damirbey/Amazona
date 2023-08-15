@@ -608,13 +608,12 @@ main {
 
 .btn {
   background-color: #f5c518;
-  border: 0.5px solid #2751f7;
+  border: none;
   padding: 0.5rem 2rem;
   color: #000;
   font-size: 1.4rem;
   cursor: pointer;
   transition: all 0.2s;
-  border-radius: 20px;
   box-shadow: 0.2rem 0.3rem 0.4rem #ccc; }
   .btn:hover {
     background-color: #d4af37;
